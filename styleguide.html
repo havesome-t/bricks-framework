@@ -1,850 +1,786 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Havesome-t Framework — Stijlgids</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-  /* ── Reset ── */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ============================================================
+   HAVESOME-T â€” CLIENT-FIRST FRAMEWORK v2.0
+   Gebaseerd op Finsweet Client-First principes
+   Gebouwd voor Bricks Builder + WordPress + Webflow
+   github.com/havesome-t/bricks-framework
 
-  /* ── Tokens ── */
-  :root {
-    --color-primary:       #000000;
-    --color-primary-hover: #222222;
-    --color-secondary:     #ffffff;
-    --color-accent:        #000000;
-    --color-text:          #1a1a1a;
-    --color-text-muted:    #6b6b6b;
-    --color-bg:            #ffffff;
-    --color-bg-alt:        #f5f5f5;
-    --color-border:        #e0e0e0;
+   NAAMGEVING SYSTEEM
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   Custom classes  â†’ gebruiken underscore  â†’ hero_content
+   Utility classes â†’ geen underscore       â†’ text-size-large
+   Combo classes   â†’ prefix is-            â†’ is-white, is-large
 
-    --space-1:  0.25rem;
-    --space-2:  0.5rem;
-    --space-3:  0.75rem;
-    --space-4:  1rem;
-    --space-5:  1.25rem;
-    --space-6:  1.5rem;
-    --space-8:  2rem;
-    --space-10: 2.5rem;
-    --space-12: 3rem;
-    --space-16: 4rem;
-    --space-20: 5rem;
-    --space-24: 6rem;
-    --space-32: 8rem;
+   CORE STRUCTURE VOLGORDE
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   page-wrapper
+   â””â”€â”€ main-wrapper
+       â””â”€â”€ section-[naam]
+           â””â”€â”€ padding-global
+               â””â”€â”€ container-large / container-medium / container-small
+                   â””â”€â”€ jouw content
 
-    --text-xs:   0.75rem;
-    --text-sm:   0.875rem;
-    --text-base: 1rem;
-    --text-md:   1.125rem;
-    --text-lg:   1.25rem;
-    --text-xl:   1.5rem;
-    --text-2xl:  2rem;
-    --text-3xl:  2.5rem;
-    --text-4xl:  3rem;
-    --text-5xl:  3.75rem;
+   INHOUDSOPGAVE
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   1.  CSS VARIABELEN
+   2.  CORE STRUCTURE
+   3.  SPACING UTILITY SYSTEEM
+   4.  TYPOGRAPHY UTILITY SYSTEEM
+   5.  KLEUR UTILITY SYSTEEM
+   6.  ACHTERGROND UTILITY SYSTEEM
+   7.  LAYOUT UTILITY SYSTEEM
+   8.  SIZING UTILITY SYSTEEM
+   9.  VISIBILITY UTILITY SYSTEEM
+   10. BORDER & RADIUS UTILITY SYSTEEM
+   11. BUTTON SYSTEEM
+   12. FORM UTILITY SYSTEEM
+   13. POSITIE UTILITY SYSTEEM
+   14. COMPONENT BASISKLASSEN
+   15. RESPONSIVE â€” BRICKS BREAKPOINTS
+   16. HELPER UTILITIES
+   ============================================================ */
 
-    --radius-sm:   4px;
-    --radius-md:   8px;
-    --radius-lg:   12px;
-    --radius-xl:   16px;
-    --radius-full: 9999px;
 
-    --transition-base: 250ms ease;
+/* ============================================================
+   1. CSS VARIABELEN
+   Overschrijf per project in Bricks â†’ Theme Styles â†’ Custom CSS
+   ============================================================ */
 
-    --sidebar-w: 220px;
-    --font-display: 'Syne', sans-serif;
-    --font-mono:    'DM Mono', monospace;
-  }
+:root {
 
-  /* ── Base ── */
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: var(--font-display);
-    background: #f8f7f4;
-    color: var(--color-text);
-    display: flex;
-    min-height: 100vh;
-  }
+  /* Kleuren â€” overschrijf per project */
+  --color-primary:          #000000;
+  --color-primary-hover:    #222222;
+  --color-secondary:        #ffffff;
+  --color-accent:           #000000;
 
-  /* ── Sidebar ── */
-  .sidebar {
-    position: fixed;
-    top: 0; left: 0;
-    width: var(--sidebar-w);
-    height: 100vh;
-    background: #0e0e0e;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-8) var(--space-6);
-    z-index: 100;
-    overflow-y: auto;
-  }
-  .sidebar-logo {
-    font-size: var(--text-sm);
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #fff;
-    margin-bottom: var(--space-2);
-  }
-  .sidebar-sub {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: #666;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: var(--space-10);
-    padding-bottom: var(--space-6);
-    border-bottom: 1px solid #222;
-  }
-  .sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: var(--space-1); }
-  .sidebar-nav a {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: #888;
-    text-decoration: none;
-    padding: var(--space-2) var(--space-3);
-    border-radius: var(--radius-sm);
-    letter-spacing: 0.04em;
-    transition: all var(--transition-base);
-  }
-  .sidebar-nav a:hover { color: #fff; background: #1a1a1a; }
-  .sidebar-nav .nav-label {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: #444;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: var(--space-4) var(--space-3) var(--space-1);
-  }
-  .sidebar-version {
-    margin-top: auto;
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: #333;
-    letter-spacing: 0.06em;
-  }
+  /* Neutrale kleuren */
+  --color-neutral-lightest: #f8f8f8;
+  --color-neutral-light:    #f0f0f0;
+  --color-neutral-medium:   #d0d0d0;
+  --color-neutral-dark:     #6b6b6b;
+  --color-neutral-darkest:  #1a1a1a;
 
-  /* ── Main ── */
-  .main {
-    margin-left: var(--sidebar-w);
-    flex: 1;
-    padding: var(--space-12) var(--space-12);
-    max-width: 960px;
-  }
+  /* Semantische kleuren */
+  --color-text:             #1a1a1a;
+  --color-text-light:       #6b6b6b;
+  --color-text-inverse:     #ffffff;
+  --color-bg:               #ffffff;
+  --color-bg-alt:           #f5f5f5;
+  --color-border:           #e0e0e0;
+  --color-border-dark:      #c0c0c0;
 
-  /* ── Section ── */
-  .sg-section {
-    margin-bottom: var(--space-20);
-    scroll-margin-top: var(--space-8);
-  }
-  .sg-section-header {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-4);
-    margin-bottom: var(--space-8);
-    padding-bottom: var(--space-4);
-    border-bottom: 1px solid var(--color-border);
-  }
-  .sg-section-title {
-    font-size: var(--text-xl);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-  .sg-section-tag {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--color-text-muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+  /* Status */
+  --color-success:          #22c55e;
+  --color-warning:          #f59e0b;
+  --color-error:            #ef4444;
 
-  /* ── Card ── */
-  .sg-card {
-    background: #fff;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-8);
-    margin-bottom: var(--space-4);
-  }
-  .sg-card-label {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--color-text-muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: var(--space-6);
-  }
+  /* Spacing schaal rem â€” 1rem = 16px */
+  --space-0:    0;
+  --space-1:    0.25rem;
+  --space-2:    0.5rem;
+  --space-3:    0.75rem;
+  --space-4:    1rem;
+  --space-5:    1.25rem;
+  --space-6:    1.5rem;
+  --space-8:    2rem;
+  --space-10:   2.5rem;
+  --space-12:   3rem;
+  --space-16:   4rem;
+  --space-20:   5rem;
+  --space-24:   6rem;
+  --space-28:   7rem;
+  --space-32:   8rem;
+  --space-40:   10rem;
 
-  /* ── Hero ── */
-  .sg-hero {
-    background: #0e0e0e;
-    color: #fff;
-    border-radius: var(--radius-xl);
-    padding: var(--space-16) var(--space-12);
-    margin-bottom: var(--space-16);
-    position: relative;
-    overflow: hidden;
-  }
-  .sg-hero::before {
-    content: '';
-    position: absolute;
-    top: -80px; right: -80px;
-    width: 320px; height: 320px;
-    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .sg-hero-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #555;
-    margin-bottom: var(--space-4);
-  }
-  .sg-hero h1 {
-    font-size: var(--text-4xl);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1.1;
-    margin-bottom: var(--space-4);
-  }
-  .sg-hero p {
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    color: #888;
-    max-width: 480px;
-    line-height: 1.7;
-  }
-  .sg-hero-url {
-    display: inline-block;
-    margin-top: var(--space-6);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: #444;
-    background: #1a1a1a;
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-sm);
-    letter-spacing: 0.04em;
-    word-break: break-all;
-  }
+  /* Typography schaal â€” rem, geen clamp */
+  --text-xs:    0.75rem;
+  --text-sm:    0.875rem;
+  --text-base:  1rem;
+  --text-md:    1.125rem;
+  --text-lg:    1.25rem;
+  --text-xl:    1.5rem;
+  --text-2xl:   2rem;
+  --text-3xl:   2.5rem;
+  --text-4xl:   3rem;
+  --text-5xl:   3.75rem;
+  --text-6xl:   4.5rem;
 
-  /* ── Colors ── */
-  .color-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: var(--space-4);
-  }
-  .color-swatch {
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    border: 1px solid var(--color-border);
-  }
-  .color-swatch-preview {
-    height: 72px;
-  }
-  .color-swatch-info {
-    padding: var(--space-3);
-    background: #fff;
-  }
-  .color-swatch-name {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    font-weight: 500;
-    color: var(--color-text);
-    display: block;
-    margin-bottom: 2px;
-  }
-  .color-swatch-value {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: var(--color-text-muted);
-  }
+  /* Line heights */
+  --leading-none:    1;
+  --leading-tight:   1.2;
+  --leading-snug:    1.35;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;
+  --leading-loose:   2;
 
-  /* ── Typography ── */
-  .type-row {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-6);
-    padding: var(--space-5) 0;
-    border-bottom: 1px solid #f0f0f0;
-  }
-  .type-row:last-child { border-bottom: none; }
-  .type-meta {
-    width: 120px;
-    flex-shrink: 0;
-    text-align: right;
-  }
-  .type-class {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: #0066cc;
-    background: #e8f0fe;
-    padding: 2px 6px;
-    border-radius: 3px;
-    display: block;
-    margin-bottom: 2px;
-  }
-  .type-size {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: var(--color-text-muted);
-  }
-  .type-sample { flex: 1; }
+  /* Font weights */
+  --weight-light:    300;
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-black:    900;
 
-  /* ── Spacing ── */
-  .spacing-grid {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-  .spacing-row {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-  }
-  .spacing-bar-wrap { flex: 1; }
-  .spacing-bar {
-    height: 24px;
-    background: #0e0e0e;
-    border-radius: 3px;
-  }
-  .spacing-label {
-    width: 80px;
-    flex-shrink: 0;
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: #0066cc;
-    background: #e8f0fe;
-    padding: 2px 6px;
-    border-radius: 3px;
-    text-align: center;
-  }
-  .spacing-value {
-    width: 60px;
-    flex-shrink: 0;
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: var(--color-text-muted);
-  }
+  /* Letter spacing */
+  --tracking-tight:   -0.03em;
+  --tracking-snug:    -0.01em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.05em;
+  --tracking-wider:   0.1em;
+  --tracking-widest:  0.15em;
 
-  /* ── Buttons ── */
-  .btn-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    align-items: center;
-  }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-3) var(--space-6);
-    font-family: var(--font-display);
-    font-size: var(--text-base);
-    font-weight: 500;
-    line-height: 1;
-    border-radius: var(--radius-md);
-    border: 2px solid transparent;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all var(--transition-base);
-    white-space: nowrap;
-  }
-  .btn-primary   { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
-  .btn-primary:hover { background: #333; border-color: #333; }
-  .btn-secondary { background: transparent; color: var(--color-primary); border-color: var(--color-primary); }
-  .btn-secondary:hover { background: var(--color-primary); color: #fff; }
-  .btn-sm { padding: var(--space-2) var(--space-4); font-size: var(--text-sm); }
-  .btn-lg { padding: var(--space-4) var(--space-8); font-size: var(--text-md); }
+  /* Container breedtes */
+  --container-xsmall: 480px;
+  --container-small:  640px;
+  --container-medium: 860px;
+  --container-large:  1200px;
+  --container-xlarge: 1400px;
 
-  /* ── Grid demo ── */
-  .grid-demo { display: grid; gap: var(--space-3); }
-  .grid-cell {
-    background: #0e0e0e;
-    color: #fff;
-    border-radius: var(--radius-sm);
-    padding: var(--space-4);
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    text-align: center;
-    letter-spacing: 0.06em;
-  }
-  .grid-cell.light {
-    background: #f0f0f0;
-    color: #888;
-  }
+  /* Globale padding links + rechts */
+  --padding-global: 1.25rem;
 
-  /* ── Code chip ── */
-  code {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    background: #f0f0f0;
-    color: #333;
-    padding: 2px 6px;
-    border-radius: 3px;
-  }
+  /* Border radius */
+  --radius-small:  4px;
+  --radius-medium: 8px;
+  --radius-large:  12px;
+  --radius-xlarge: 16px;
+  --radius-full:   9999px;
 
-  /* ── Radius demo ── */
-  .radius-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-6);
-    align-items: flex-end;
-  }
-  .radius-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-3);
-  }
-  .radius-preview {
-    width: 64px;
-    height: 64px;
-    background: #0e0e0e;
-  }
-  .radius-meta {
-    text-align: center;
-  }
-  .radius-class { font-family: var(--font-mono); font-size: 0.6rem; color: #0066cc; background: #e8f0fe; padding: 1px 5px; border-radius: 3px; display: block; }
-  .radius-val   { font-family: var(--font-mono); font-size: 0.58rem; color: var(--color-text-muted); display: block; margin-top: 2px; }
+  /* Transitions */
+  --ease-fast:   150ms ease;
+  --ease-base:   250ms ease;
+  --ease-slow:   400ms ease;
+  --ease-slower: 600ms ease;
 
-  /* ── Scrollbar ── */
-  .sidebar::-webkit-scrollbar { width: 4px; }
-  .sidebar::-webkit-scrollbar-track { background: transparent; }
-  .sidebar::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+  /* Shadows */
+  --shadow-small:  0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-medium: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-large:  0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06);
+}
 
-  @media (max-width: 768px) {
-    .sidebar { display: none; }
-    .main { margin-left: 0; padding: var(--space-8) var(--space-6); }
-  }
-</style>
-</head>
-<body>
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="sidebar-logo">Havesome-t</div>
-  <div class="sidebar-sub">Bricks Framework v1.0</div>
-  <ul class="sidebar-nav">
-    <li class="nav-label">Fundament</li>
-    <li><a href="#kleuren">Kleuren</a></li>
-    <li><a href="#typography">Typography</a></li>
-    <li><a href="#spacing">Spacing</a></li>
-    <li class="nav-label">Componenten</li>
-    <li><a href="#buttons">Buttons</a></li>
-    <li><a href="#grid">Grid</a></li>
-    <li><a href="#radius">Border Radius</a></li>
-    <li class="nav-label">Referentie</li>
-    <li><a href="#classes">Alle Classes</a></li>
-  </ul>
-  <div class="sidebar-version">github.com/havesome-t/<br>bricks-framework</div>
-</aside>
+/* ============================================================
+   2. CORE STRUCTURE
+   De vaste lagenstructuur â€” gebruik altijd in deze volgorde.
+   ============================================================ */
 
-<!-- MAIN -->
-<main class="main">
+/* Laag 1 â€” omsluit de hele pagina */
+.page-wrapper {
+  overflow: hidden;
+  position: relative;
+}
 
-  <!-- HERO -->
-  <div class="sg-hero">
-    <div class="sg-hero-eyebrow">Stijlgids — Visuele Documentatie</div>
-    <h1>Havesome-t<br>Framework</h1>
-    <p>Jouw persoonlijke Client-First utility systeem voor Bricks Builder. Alle tokens, classes en componenten op één plek.</p>
-    <span class="sg-hero-url">https://raw.githubusercontent.com/havesome-t/bricks-framework/refs/heads/main/framework.css</span>
-  </div>
+/* Laag 2 â€” main content exclusief nav en footer */
+.main-wrapper {
+  /* Geen standaard stijlen â€” alleen semantisch */
+}
 
-  <!-- KLEUREN -->
-  <section class="sg-section" id="kleuren">
-    <div class="sg-section-header">
-      <h2 class="sg-section-title">Kleuren</h2>
-      <span class="sg-section-tag">Design Tokens</span>
-    </div>
+/* Laag 3 â€” secties organiseren de pagina in blokken */
+/* Geef altijd een beschrijvende naam: section-hero, section-diensten, section-contact */
+/* De section zelf krijgt GEEN padding â€” dat doet padding-global */
+[class*="section-"] {
+  position: relative;
+  width: 100%;
+}
 
-    <div class="sg-card">
-      <div class="sg-card-label">Project kleuren — overschrijf per project via :root</div>
-      <div class="color-grid">
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background:#000000"></div>
-          <div class="color-swatch-info">
-            <span class="color-swatch-name">--color-primary</span>
-            <span class="color-swatch-value">#000000</span>
-          </div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background:#ffffff;border-bottom:1px solid #e0e0e0"></div>
-          <div class="color-swatch-info">
-            <span class="color-swatch-name">--color-secondary</span>
-            <span class="color-swatch-value">#ffffff</span>
-          </div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background:#1a1a1a"></div>
-          <div class="color-swatch-info">
-            <span class="color-swatch-name">--color-text</span>
-            <span class="color-swatch-value">#1a1a1a</span>
-          </div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background:#6b6b6b"></div>
-          <div class="color-swatch-info">
-            <span class="color-swatch-name">--color-text-muted</span>
-            <span class="color-swatch-value">#6b6b6b</span>
-          </div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background:#f5f5f5;border-bottom:1px solid #e0e0e0"></div>
-          <div class="color-swatch-info">
-            <span class="color-swatch-name">--color-bg-alt</span>
-            <span class="color-swatch-value">#f5f5f5</span>
-          </div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background:#e0e0e0"></div>
-          <div class="color-swatch-info">
-            <span class="color-swatch-name">--color-border</span>
-            <span class="color-swatch-value">#e0e0e0</span>
-          </div>
-        </div>
-      </div>
-    </div>
+/* Laag 4 â€” globale horizontale padding */
+/* ALLEEN padding-left en padding-right â€” nooit verticale spacing hier */
+.padding-global {
+  padding-left:  var(--padding-global);
+  padding-right: var(--padding-global);
+}
 
-    <div class="sg-card">
-      <div class="sg-card-label">Utility classes</div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
-        <span style="background:#000;color:#fff;padding:6px 12px;border-radius:4px;font-family:var(--font-mono);font-size:0.7rem">.bg-primary</span>
-        <span style="background:#f5f5f5;padding:6px 12px;border-radius:4px;font-family:var(--font-mono);font-size:0.7rem;border:1px solid #e0e0e0">.bg-light</span>
-        <span style="background:#fff;padding:6px 12px;border-radius:4px;font-family:var(--font-mono);font-size:0.7rem;border:1px solid #e0e0e0">.bg-white</span>
-        <span style="background:#1a1a1a;color:#fff;padding:6px 12px;border-radius:4px;font-family:var(--font-mono);font-size:0.7rem">.bg-dark</span>
-        <span style="color:#000;font-family:var(--font-mono);font-size:0.7rem">.text-primary</span>
-        <span style="color:#6b6b6b;font-family:var(--font-mono);font-size:0.7rem">.text-muted</span>
-        <span style="background:#1a1a1a;color:#fff;font-family:var(--font-mono);font-size:0.7rem;padding:3px 8px;border-radius:3px">.text-white</span>
-      </div>
-    </div>
-  </section>
+/* Laag 5 â€” verticale sectie spacing */
+.padding-section-small  { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+.padding-section-medium { padding-top: var(--space-20); padding-bottom: var(--space-20); }
+.padding-section-large  { padding-top: var(--space-32); padding-bottom: var(--space-32); }
 
-  <!-- TYPOGRAPHY -->
-  <section class="sg-section" id="typography">
-    <div class="sg-section-header">
-      <h2 class="sg-section-title">Typography</h2>
-      <span class="sg-section-tag">Font Scale — rem based</span>
-    </div>
+/* Laag 6 â€” container centreert content met een max-width */
+.container-xsmall,
+.container-small,
+.container-medium,
+.container-large,
+.container-xlarge {
+  margin-left:  auto;
+  margin-right: auto;
+  width: 100%;
+}
+.container-xsmall { max-width: var(--container-xsmall); }
+.container-small  { max-width: var(--container-small); }
+.container-medium { max-width: var(--container-medium); }
+.container-large  { max-width: var(--container-large); }
+.container-xlarge { max-width: var(--container-xlarge); }
 
-    <div class="sg-card">
-      <div class="sg-card-label">Type scale</div>
-      <div class="type-row">
-        <div class="type-meta"><span class="type-class">.text-5xl</span><span class="type-size">3.75rem / 60px</span></div>
-        <div class="type-sample" style="font-size:3.75rem;font-weight:700;line-height:1.1;letter-spacing:-0.03em">Heading</div>
-      </div>
-      <div class="type-row">
-        <div class="type-meta"><span class="type-class">.text-4xl</span><span class="type-size">3rem / 48px</span></div>
-        <div class="type-sample" style="font-size:3rem;font-weight:700;line-height:1.1;letter-spacing:-0.03em">Heading</div>
-      </div>
-      <div class="type-row">
-        <div class="type-meta"><span class="type-class">.text-3xl</span><span class="type-size">2.5rem / 40px</span></div>
-        <div class="type-sample" style="font-size:2.5rem;font-weight:700;line-height:1.2">Heading</div>
-      </div>
-      <div class="type-row">
-        <div class="type-meta"><span class="type-class">.text-2xl</span><span class="type-size">2rem / 32px</span></div>
-        <div class="type-sample" style="font-size:2rem;font-weight:600">Subheading</div>
-      </div>
-      <div class="type-row">
-        <div class="type-meta"><span class="type-class">.text-xl</span><span class="type-size">1.5rem / 24px</span></div>
-        <div class="type-sample" style="font-size:1.5rem;font-weight:600">Subheading</div>
-      </div>
-      <div class="type-row">
-        <div class="type-meta"><span class="type-class">.text-lg</span><span class="type-size">1.25rem / 20px</span></div>
-        <div class="type-sample" style="font-size:1.25rem">Lead paragraph tekst</div>
-      </div>
-      <div class="type-row">
-        <div class="type-meta"><span class="type-class">.text-md</span><span class="type-size">1.125rem / 18px</span></div>
-        <div class="type-sample" style="font-size:1.125rem">Body tekst groter</div>
-      </div>
-      <div class="type-row">
-        <div class="type-meta"><span class="type-class">.text-base</span><span class="type-size">1rem / 16px</span></div>
-        <div class="type-sample" style="font-size:1rem">Body tekst standaard. Dit is de basis van alle lopende tekst op de pagina.</div>
-      </div>
-      <div class="type-row">
-        <div class="type-meta"><span class="type-class">.text-sm</span><span class="type-size">0.875rem / 14px</span></div>
-        <div class="type-sample" style="font-size:0.875rem">Caption, label, meta informatie</div>
-      </div>
-      <div class="type-row">
-        <div class="type-meta"><span class="type-class">.text-xs</span><span class="type-size">0.75rem / 12px</span></div>
-        <div class="type-sample" style="font-size:0.75rem;color:#6b6b6b">Micro tekst, timestamps, disclaimers</div>
-      </div>
-    </div>
 
-    <div class="sg-card">
-      <div class="sg-card-label">Font weights & line heights</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-        <div>
-          <div style="margin-bottom:12px;font-family:var(--font-mono);font-size:0.6rem;color:#888;text-transform:uppercase;letter-spacing:0.1em">Weights</div>
-          <div style="font-size:1.25rem;font-weight:400;margin-bottom:8px">Regular — 400 <code>.font-regular</code></div>
-          <div style="font-size:1.25rem;font-weight:500;margin-bottom:8px">Medium — 500 <code>.font-medium</code></div>
-          <div style="font-size:1.25rem;font-weight:600;margin-bottom:8px">Semibold — 600 <code>.font-semibold</code></div>
-          <div style="font-size:1.25rem;font-weight:700">Bold — 700 <code>.font-bold</code></div>
-        </div>
-        <div>
-          <div style="margin-bottom:12px;font-family:var(--font-mono);font-size:0.6rem;color:#888;text-transform:uppercase;letter-spacing:0.1em">Line heights</div>
-          <div style="line-height:1.2;margin-bottom:12px;font-size:0.9rem">Tight 1.2 — .leading-tight<br>Compact koppen</div>
-          <div style="line-height:1.5;margin-bottom:12px;font-size:0.9rem">Normal 1.5 — .leading-normal<br>Standaard body tekst</div>
-          <div style="line-height:1.7;font-size:0.9rem">Relaxed 1.7 — .leading-relaxed<br>Longform, leesbare tekst</div>
-        </div>
-      </div>
-    </div>
-  </section>
+/* ============================================================
+   3. SPACING UTILITY SYSTEEM
+   ============================================================ */
 
-  <!-- SPACING -->
-  <section class="sg-section" id="spacing">
-    <div class="sg-section-header">
-      <h2 class="sg-section-title">Spacing</h2>
-      <span class="sg-section-tag">Rem scale — 4px basis</span>
-    </div>
+.padding-0   { padding: 0; }
+.padding-4   { padding: var(--space-4); }
+.padding-6   { padding: var(--space-6); }
+.padding-8   { padding: var(--space-8); }
+.padding-12  { padding: var(--space-12); }
+.padding-16  { padding: var(--space-16); }
 
-    <div class="sg-card">
-      <div class="sg-card-label">Spacing scale visualisatie</div>
-      <div class="spacing-grid">
-        <div class="spacing-row">
-          <div class="spacing-label">--space-1</div>
-          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:4px"></div></div>
-          <div class="spacing-value">0.25rem / 4px</div>
-        </div>
-        <div class="spacing-row">
-          <div class="spacing-label">--space-2</div>
-          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:8px"></div></div>
-          <div class="spacing-value">0.5rem / 8px</div>
-        </div>
-        <div class="spacing-row">
-          <div class="spacing-label">--space-4</div>
-          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:16px"></div></div>
-          <div class="spacing-value">1rem / 16px</div>
-        </div>
-        <div class="spacing-row">
-          <div class="spacing-label">--space-6</div>
-          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:24px"></div></div>
-          <div class="spacing-value">1.5rem / 24px</div>
-        </div>
-        <div class="spacing-row">
-          <div class="spacing-label">--space-8</div>
-          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:32px"></div></div>
-          <div class="spacing-value">2rem / 32px</div>
-        </div>
-        <div class="spacing-row">
-          <div class="spacing-label">--space-12</div>
-          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:48px"></div></div>
-          <div class="spacing-value">3rem / 48px</div>
-        </div>
-        <div class="spacing-row">
-          <div class="spacing-label">--space-16</div>
-          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:64px"></div></div>
-          <div class="spacing-value">4rem / 64px</div>
-        </div>
-        <div class="spacing-row">
-          <div class="spacing-label">--space-20</div>
-          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:80px"></div></div>
-          <div class="spacing-value">5rem / 80px</div>
-        </div>
-        <div class="spacing-row">
-          <div class="spacing-label">--space-24</div>
-          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:96px"></div></div>
-          <div class="spacing-value">6rem / 96px</div>
-        </div>
-        <div class="spacing-row">
-          <div class="spacing-label">--space-32</div>
-          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:128px"></div></div>
-          <div class="spacing-value">8rem / 128px</div>
-        </div>
-      </div>
-    </div>
+.padding-horizontal-4   { padding-left: var(--space-4);  padding-right: var(--space-4); }
+.padding-horizontal-6   { padding-left: var(--space-6);  padding-right: var(--space-6); }
+.padding-horizontal-8   { padding-left: var(--space-8);  padding-right: var(--space-8); }
+.padding-horizontal-12  { padding-left: var(--space-12); padding-right: var(--space-12); }
+.padding-horizontal-16  { padding-left: var(--space-16); padding-right: var(--space-16); }
 
-    <div class="sg-card">
-      <div class="sg-card-label">Gebruik — padding &amp; margin classes</div>
-      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2;color:#333;">
-        <span style="color:#0066cc">.p-{n}</span> &nbsp;padding alle kanten &nbsp;|&nbsp;
-        <span style="color:#0066cc">.px-{n}</span> &nbsp;padding links+rechts &nbsp;|&nbsp;
-        <span style="color:#0066cc">.py-{n}</span> &nbsp;padding top+bottom<br>
-        <span style="color:#0066cc">.pt-{n}</span> &nbsp;padding top &nbsp;|&nbsp;
-        <span style="color:#0066cc">.pb-{n}</span> &nbsp;padding bottom<br>
-        <span style="color:#0066cc">.mt-{n}</span> &nbsp;margin top &nbsp;|&nbsp;
-        <span style="color:#0066cc">.mb-{n}</span> &nbsp;margin bottom &nbsp;|&nbsp;
-        <span style="color:#0066cc">.mx-auto</span> &nbsp;centreert element<br>
-        <span style="color:#0066cc">.gap-{n}</span> &nbsp;gap voor flex/grid &nbsp;|&nbsp;
-        beschikbare nummers: <strong>0 1 2 3 4 5 6 8 10 12 16 20 24 32</strong>
-      </div>
-    </div>
-  </section>
+.padding-vertical-4   { padding-top: var(--space-4);  padding-bottom: var(--space-4); }
+.padding-vertical-6   { padding-top: var(--space-6);  padding-bottom: var(--space-6); }
+.padding-vertical-8   { padding-top: var(--space-8);  padding-bottom: var(--space-8); }
+.padding-vertical-12  { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+.padding-vertical-16  { padding-top: var(--space-16); padding-bottom: var(--space-16); }
+.padding-vertical-20  { padding-top: var(--space-20); padding-bottom: var(--space-20); }
+.padding-vertical-24  { padding-top: var(--space-24); padding-bottom: var(--space-24); }
+.padding-vertical-32  { padding-top: var(--space-32); padding-bottom: var(--space-32); }
 
-  <!-- BUTTONS -->
-  <section class="sg-section" id="buttons">
-    <div class="sg-section-header">
-      <h2 class="sg-section-title">Buttons</h2>
-      <span class="sg-section-tag">CTA componenten</span>
-    </div>
+.padding-top-0   { padding-top: 0; }
+.padding-top-4   { padding-top: var(--space-4); }
+.padding-top-6   { padding-top: var(--space-6); }
+.padding-top-8   { padding-top: var(--space-8); }
+.padding-top-12  { padding-top: var(--space-12); }
+.padding-top-16  { padding-top: var(--space-16); }
+.padding-top-20  { padding-top: var(--space-20); }
+.padding-top-24  { padding-top: var(--space-24); }
 
-    <div class="sg-card">
-      <div class="sg-card-label">Varianten</div>
-      <div class="btn-grid">
-        <a href="#" class="btn btn-primary">Primary</a>
-        <a href="#" class="btn btn-secondary">Secondary</a>
-        <a href="#" class="btn btn-primary btn-sm">Small</a>
-        <a href="#" class="btn btn-primary btn-lg">Large</a>
-      </div>
-    </div>
+.padding-bottom-0   { padding-bottom: 0; }
+.padding-bottom-4   { padding-bottom: var(--space-4); }
+.padding-bottom-6   { padding-bottom: var(--space-6); }
+.padding-bottom-8   { padding-bottom: var(--space-8); }
+.padding-bottom-12  { padding-bottom: var(--space-12); }
+.padding-bottom-16  { padding-bottom: var(--space-16); }
+.padding-bottom-20  { padding-bottom: var(--space-20); }
+.padding-bottom-24  { padding-bottom: var(--space-24); }
 
-    <div class="sg-card">
-      <div class="sg-card-label">Classes — combineer altijd .btn met een variant</div>
-      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333;">
-        <code>.btn</code> basis class — altijd vereist<br>
-        <code>.btn-primary</code> gevulde knop in primary kleur<br>
-        <code>.btn-secondary</code> outline knop<br>
-        <code>.btn-white</code> voor op donkere achtergrond<br>
-        <code>.btn-sm</code> klein formaat<br>
-        <code>.btn-lg</code> groot formaat<br>
-        <code>.btn-full</code> volle breedte
-      </div>
-    </div>
-  </section>
+.margin-auto            { margin: auto; }
+.margin-horizontal-auto { margin-left: auto; margin-right: auto; }
+.margin-0               { margin: 0; }
 
-  <!-- GRID -->
-  <section class="sg-section" id="grid">
-    <div class="sg-section-header">
-      <h2 class="sg-section-title">Grid & Flex</h2>
-      <span class="sg-section-tag">Layout systeem</span>
-    </div>
+.margin-top-0   { margin-top: 0; }
+.margin-top-2   { margin-top: var(--space-2); }
+.margin-top-4   { margin-top: var(--space-4); }
+.margin-top-6   { margin-top: var(--space-6); }
+.margin-top-8   { margin-top: var(--space-8); }
+.margin-top-12  { margin-top: var(--space-12); }
+.margin-top-16  { margin-top: var(--space-16); }
+.margin-top-20  { margin-top: var(--space-20); }
 
-    <div class="sg-card">
-      <div class="sg-card-label">.grid-cols-3 — 3 kolommen</div>
-      <div class="grid-demo" style="grid-template-columns:repeat(3,1fr)">
-        <div class="grid-cell">col 1</div>
-        <div class="grid-cell">col 2</div>
-        <div class="grid-cell">col 3</div>
-      </div>
-    </div>
+.margin-bottom-0   { margin-bottom: 0; }
+.margin-bottom-2   { margin-bottom: var(--space-2); }
+.margin-bottom-4   { margin-bottom: var(--space-4); }
+.margin-bottom-6   { margin-bottom: var(--space-6); }
+.margin-bottom-8   { margin-bottom: var(--space-8); }
+.margin-bottom-12  { margin-bottom: var(--space-12); }
+.margin-bottom-16  { margin-bottom: var(--space-16); }
+.margin-bottom-20  { margin-bottom: var(--space-20); }
 
-    <div class="sg-card">
-      <div class="sg-card-label">.grid-cols-4 — 4 kolommen</div>
-      <div class="grid-demo" style="grid-template-columns:repeat(4,1fr)">
-        <div class="grid-cell">col 1</div>
-        <div class="grid-cell">col 2</div>
-        <div class="grid-cell">col 3</div>
-        <div class="grid-cell">col 4</div>
-      </div>
-    </div>
+.gap-0   { gap: 0; }
+.gap-2   { gap: var(--space-2); }
+.gap-4   { gap: var(--space-4); }
+.gap-6   { gap: var(--space-6); }
+.gap-8   { gap: var(--space-8); }
+.gap-10  { gap: var(--space-10); }
+.gap-12  { gap: var(--space-12); }
+.gap-16  { gap: var(--space-16); }
+.gap-20  { gap: var(--space-20); }
 
-    <div class="sg-card">
-      <div class="sg-card-label">.col-span — kolommen overbruggen</div>
-      <div class="grid-demo" style="grid-template-columns:repeat(4,1fr)">
-        <div class="grid-cell" style="grid-column:span 3">.col-span-3</div>
-        <div class="grid-cell light">col</div>
-        <div class="grid-cell light">col</div>
-        <div class="grid-cell" style="grid-column:span 2">.col-span-2</div>
-        <div class="grid-cell light">col</div>
-      </div>
-    </div>
 
-    <div class="sg-card">
-      <div class="sg-card-label">Flex utilities</div>
-      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333">
-        <code>.flex</code> display flex &nbsp;|&nbsp; <code>.flex-col</code> verticaal &nbsp;|&nbsp; <code>.flex-wrap</code> wrappen<br>
-        <code>.items-center</code> verticaal centreren &nbsp;|&nbsp; <code>.items-start</code> &nbsp;|&nbsp; <code>.items-end</code><br>
-        <code>.justify-between</code> &nbsp;|&nbsp; <code>.justify-center</code> &nbsp;|&nbsp; <code>.justify-end</code><br>
-        <code>.flex-1</code> neemt beschikbare ruimte &nbsp;|&nbsp; <code>.flex-none</code> vaste breedte
-      </div>
-    </div>
-  </section>
+/* ============================================================
+   4. TYPOGRAPHY UTILITY SYSTEEM
+   ============================================================ */
 
-  <!-- BORDER RADIUS -->
-  <section class="sg-section" id="radius">
-    <div class="sg-section-header">
-      <h2 class="sg-section-title">Border Radius</h2>
-      <span class="sg-section-tag">Afronding</span>
-    </div>
+.text-size-xsmall  { font-size: var(--text-xs); }
+.text-size-small   { font-size: var(--text-sm); }
+.text-size-regular { font-size: var(--text-base); }
+.text-size-medium  { font-size: var(--text-md); }
+.text-size-large   { font-size: var(--text-lg); }
+.text-size-xlarge  { font-size: var(--text-xl); }
+.text-size-2xlarge { font-size: var(--text-2xl); }
+.text-size-3xlarge { font-size: var(--text-3xl); }
+.text-size-4xlarge { font-size: var(--text-4xl); }
+.text-size-5xlarge { font-size: var(--text-5xl); }
+.text-size-6xlarge { font-size: var(--text-6xl); }
 
-    <div class="sg-card">
-      <div class="sg-card-label">Radius scale</div>
-      <div class="radius-grid">
-        <div class="radius-box">
-          <div class="radius-preview" style="border-radius:0"></div>
-          <div class="radius-meta"><span class="radius-class">.no-radius</span><span class="radius-val">0px</span></div>
-        </div>
-        <div class="radius-box">
-          <div class="radius-preview" style="border-radius:4px"></div>
-          <div class="radius-meta"><span class="radius-class">.rounded-sm</span><span class="radius-val">4px</span></div>
-        </div>
-        <div class="radius-box">
-          <div class="radius-preview" style="border-radius:8px"></div>
-          <div class="radius-meta"><span class="radius-class">.rounded-md</span><span class="radius-val">8px</span></div>
-        </div>
-        <div class="radius-box">
-          <div class="radius-preview" style="border-radius:12px"></div>
-          <div class="radius-meta"><span class="radius-class">.rounded-lg</span><span class="radius-val">12px</span></div>
-        </div>
-        <div class="radius-box">
-          <div class="radius-preview" style="border-radius:16px"></div>
-          <div class="radius-meta"><span class="radius-class">.rounded-xl</span><span class="radius-val">16px</span></div>
-        </div>
-        <div class="radius-box">
-          <div class="radius-preview" style="border-radius:9999px"></div>
-          <div class="radius-meta"><span class="radius-class">.rounded-full</span><span class="radius-val">9999px</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
+.text-weight-light    { font-weight: var(--weight-light); }
+.text-weight-regular  { font-weight: var(--weight-regular); }
+.text-weight-medium   { font-weight: var(--weight-medium); }
+.text-weight-semibold { font-weight: var(--weight-semibold); }
+.text-weight-bold     { font-weight: var(--weight-bold); }
+.text-weight-black    { font-weight: var(--weight-black); }
 
-  <!-- ALLE CLASSES -->
-  <section class="sg-section" id="classes">
-    <div class="sg-section-header">
-      <h2 class="sg-section-title">Alle Classes</h2>
-      <span class="sg-section-tag">Snelle referentie</span>
-    </div>
+.text-height-tight    { line-height: var(--leading-tight); }
+.text-height-snug     { line-height: var(--leading-snug); }
+.text-height-normal   { line-height: var(--leading-normal); }
+.text-height-relaxed  { line-height: var(--leading-relaxed); }
+.text-height-loose    { line-height: var(--leading-loose); }
 
-    <div class="sg-card">
-      <div class="sg-card-label">Containers</div>
-      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333">
-        <code>.container</code> max 1200px gecentreerd &nbsp;|&nbsp;
-        <code>.container-sm</code> 640px &nbsp;|&nbsp;
-        <code>.container-md</code> 768px<br>
-        <code>.container-lg</code> 1024px &nbsp;|&nbsp;
-        <code>.container-2xl</code> 1400px &nbsp;|&nbsp;
-        <code>.container-fluid</code> volledige breedte
-      </div>
-    </div>
+.text-spacing-tight   { letter-spacing: var(--tracking-tight); }
+.text-spacing-normal  { letter-spacing: var(--tracking-normal); }
+.text-spacing-wide    { letter-spacing: var(--tracking-wide); }
+.text-spacing-wider   { letter-spacing: var(--tracking-wider); }
+.text-spacing-widest  { letter-spacing: var(--tracking-widest); }
 
-    <div class="sg-card">
-      <div class="sg-card-label">Secties</div>
-      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333">
-        <code>.section</code> padding top/bottom 5rem &nbsp;|&nbsp;
-        <code>.section-sm</code> 3rem &nbsp;|&nbsp;
-        <code>.section-lg</code> 8rem<br>
-        Responsive: verkleint automatisch op kleinere schermen
-      </div>
-    </div>
+.text-align-left    { text-align: left; }
+.text-align-center  { text-align: center; }
+.text-align-right   { text-align: right; }
 
-    <div class="sg-card">
-      <div class="sg-card-label">Overige utilities</div>
-      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333">
-        <code>.w-full</code> breedte 100% &nbsp;|&nbsp;
-        <code>.h-full</code> hoogte 100% &nbsp;|&nbsp;
-        <code>.hidden</code> verbergen<br>
-        <code>.relative</code> / <code>.absolute</code> / <code>.fixed</code> / <code>.sticky</code> positionering<br>
-        <code>.overflow-hidden</code> &nbsp;|&nbsp;
-        <code>.truncate</code> tekst afkappen met ellipsis<br>
-        <code>.ratio-16-9</code> / <code>.ratio-4-3</code> / <code>.ratio-1-1</code> aspect ratios voor afbeeldingen<br>
-        <code>.object-cover</code> / <code>.object-contain</code> afbeelding vulling<br>
-        <code>.hidden-mobile</code> verbergen op mobiel &nbsp;|&nbsp;
-        <code>.full-mobile</code> volle breedte op mobiel<br>
-        <code>.text-center-mobile</code> centreren op mobiel &nbsp;|&nbsp;
-        <code>.flex-col-mobile</code> kolom op mobiel
-      </div>
-    </div>
+.text-transform-uppercase  { text-transform: uppercase; }
+.text-transform-none       { text-transform: none; }
+.text-style-italic         { font-style: italic; }
 
-  </section>
 
-</main>
+/* ============================================================
+   5. KLEUR UTILITY SYSTEEM
+   ============================================================ */
 
-</body>
-</html>
+.text-color-primary  { color: var(--color-primary); }
+.text-color-light    { color: var(--color-text-light); }
+.text-color-inverse  { color: var(--color-text-inverse); }
+.text-color-success  { color: var(--color-success); }
+.text-color-warning  { color: var(--color-warning); }
+.text-color-error    { color: var(--color-error); }
+
+
+/* ============================================================
+   6. ACHTERGROND UTILITY SYSTEEM
+   ============================================================ */
+
+.background-color-primary     { background-color: var(--color-primary); }
+.background-color-secondary   { background-color: var(--color-secondary); }
+.background-color-accent      { background-color: var(--color-accent); }
+.background-color-white       { background-color: #ffffff; }
+.background-color-light       { background-color: var(--color-bg-alt); }
+.background-color-dark        { background-color: var(--color-neutral-darkest); }
+.background-color-transparent { background-color: transparent; }
+
+
+/* ============================================================
+   7. LAYOUT UTILITY SYSTEEM
+   ============================================================ */
+
+.display-flex         { display: flex; }
+.display-grid         { display: grid; }
+.display-block        { display: block; }
+.display-inline-block { display: inline-block; }
+.display-none         { display: none; }
+
+.flex-direction-row     { flex-direction: row; }
+.flex-direction-column  { flex-direction: column; }
+.flex-wrap              { flex-wrap: wrap; }
+.flex-wrap-none         { flex-wrap: nowrap; }
+
+.align-start    { align-items: flex-start; }
+.align-center   { align-items: center; }
+.align-end      { align-items: flex-end; }
+.align-stretch  { align-items: stretch; }
+
+.justify-start   { justify-content: flex-start; }
+.justify-center  { justify-content: center; }
+.justify-end     { justify-content: flex-end; }
+.justify-between { justify-content: space-between; }
+
+.flex-1    { flex: 1; }
+.flex-none { flex: none; }
+.self-start  { align-self: flex-start; }
+.self-center { align-self: center; }
+.self-end    { align-self: flex-end; }
+
+.grid-cols-1  { grid-template-columns: repeat(1, 1fr); }
+.grid-cols-2  { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3  { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4  { grid-template-columns: repeat(4, 1fr); }
+.grid-cols-5  { grid-template-columns: repeat(5, 1fr); }
+.grid-cols-6  { grid-template-columns: repeat(6, 1fr); }
+
+.span-1    { grid-column: span 1; }
+.span-2    { grid-column: span 2; }
+.span-3    { grid-column: span 3; }
+.span-4    { grid-column: span 4; }
+.span-full { grid-column: 1 / -1; }
+
+
+/* ============================================================
+   8. SIZING UTILITY SYSTEEM
+   ============================================================ */
+
+.width-full    { width: 100%; }
+.width-auto    { width: auto; }
+.height-full   { height: 100%; }
+.height-auto   { height: auto; }
+.height-screen { height: 100vh; }
+.min-height-screen { min-height: 100vh; }
+.max-width-full    { max-width: 100%; }
+
+
+/* ============================================================
+   9. VISIBILITY UTILITY SYSTEEM
+   ============================================================ */
+
+.hide       { display: none !important; }
+.invisible  { visibility: hidden; }
+.opacity-0  { opacity: 0; }
+.opacity-50 { opacity: 0.5; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* ============================================================
+   10. BORDER & RADIUS UTILITY SYSTEEM
+   ============================================================ */
+
+.border-all    { border: 1px solid var(--color-border); }
+.border-top    { border-top: 1px solid var(--color-border); }
+.border-bottom { border-bottom: 1px solid var(--color-border); }
+.border-none   { border: none; }
+
+.radius-small  { border-radius: var(--radius-small); }
+.radius-medium { border-radius: var(--radius-medium); }
+.radius-large  { border-radius: var(--radius-large); }
+.radius-xlarge { border-radius: var(--radius-xlarge); }
+.radius-full   { border-radius: var(--radius-full); }
+.radius-none   { border-radius: 0; }
+
+
+/* ============================================================
+   11. BUTTON SYSTEEM
+   Basis: .button-primary / .button-secondary / .button-text
+   Combo: voeg .is-small .is-large .is-full-width .is-white toe
+   ============================================================ */
+
+.button-primary,
+.button-secondary,
+.button-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--ease-base);
+  white-space: nowrap;
+  border-radius: var(--radius-medium);
+  border: 2px solid transparent;
+}
+
+.button-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+}
+.button-primary:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+.button-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.button-secondary:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.button-text {
+  background-color: transparent;
+  color: var(--color-primary);
+  border-color: transparent;
+  padding-left: 0; padding-right: 0;
+  text-decoration: underline;
+}
+.button-text:hover { opacity: 0.7; }
+
+/* Combo klassen */
+.button-primary.is-small,
+.button-secondary.is-small   { padding: var(--space-2) var(--space-4); font-size: var(--text-sm); }
+
+.button-primary.is-large,
+.button-secondary.is-large   { padding: var(--space-4) var(--space-8); font-size: var(--text-md); }
+
+.button-primary.is-full-width,
+.button-secondary.is-full-width { width: 100%; }
+
+.button-primary.is-white { background-color: #fff; color: var(--color-primary); border-color: #fff; }
+.button-primary.is-white:hover { background-color: transparent; color: #fff; }
+
+
+/* ============================================================
+   12. FORM UTILITY SYSTEEM
+   ============================================================ */
+
+.form-field-wrapper { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.form-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  transition: border-color var(--ease-fast);
+  appearance: none;
+}
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+.form-textarea { resize: vertical; min-height: 120px; }
+.form-error-message   { font-size: var(--text-sm); color: var(--color-error); }
+.form-success-message { font-size: var(--text-sm); color: var(--color-success); }
+
+
+/* ============================================================
+   13. POSITIE UTILITY SYSTEEM
+   ============================================================ */
+
+.overflow-hidden  { overflow: hidden; }
+.overflow-auto    { overflow: auto; }
+.overflow-x-hidden { overflow-x: hidden; }
+
+.position-relative { position: relative; }
+.position-absolute { position: absolute; }
+.position-fixed    { position: fixed; }
+.position-sticky   { position: sticky; }
+
+.z-index-1   { z-index: 1; }
+.z-index-10  { z-index: 10; }
+.z-index-20  { z-index: 20; }
+.z-index-50  { z-index: 50; }
+.z-index-100 { z-index: 100; }
+
+.absolute-fill { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+
+
+/* ============================================================
+   14. COMPONENT BASISKLASSEN
+   Gebruik met underscore naamgeving voor child elementen.
+   Combo klassen met is- prefix voor varianten.
+   ============================================================ */
+
+/* --- Kaart --- */
+.card {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  overflow: hidden;
+}
+.card_content { padding: var(--space-6); }
+.card_image   { width: 100%; display: block; }
+.card_label   { font-size: var(--text-sm); color: var(--color-text-light); }
+.card_title   { font-size: var(--text-xl); font-weight: var(--weight-bold); margin-top: var(--space-2); }
+.card_text    { font-size: var(--text-base); line-height: var(--leading-relaxed); margin-top: var(--space-3); }
+.card_footer  { padding: var(--space-4) var(--space-6); border-top: 1px solid var(--color-border); }
+
+/* --- Nav --- */
+.nav_wrapper { display: flex; align-items: center; justify-content: space-between; }
+.nav_logo    { display: flex; align-items: center; text-decoration: none; }
+.nav_menu    { display: flex; align-items: center; gap: var(--space-8); }
+.nav_link    { font-size: var(--text-base); text-decoration: none; color: var(--color-text); transition: opacity var(--ease-fast); }
+.nav_link:hover { opacity: 0.6; }
+.nav_cta     { display: flex; align-items: center; gap: var(--space-4); }
+
+/* --- Hero --- */
+.hero_component  { position: relative; }
+.hero_content    { position: relative; z-index: 1; }
+.hero_eyebrow    { font-size: var(--text-sm); font-weight: var(--weight-medium); letter-spacing: var(--tracking-wider); text-transform: uppercase; }
+.hero_title      { font-size: var(--text-5xl); font-weight: var(--weight-bold); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); }
+.hero_text       { font-size: var(--text-lg); line-height: var(--leading-relaxed); }
+.hero_buttons    { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+.hero_background { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; }
+
+/* --- Section header --- */
+.section-header          { display: flex; flex-direction: column; }
+.section-header_eyebrow  { font-size: var(--text-sm); font-weight: var(--weight-medium); letter-spacing: var(--tracking-wider); text-transform: uppercase; }
+.section-header_title    { font-size: var(--text-4xl); font-weight: var(--weight-bold); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); }
+.section-header_text     { font-size: var(--text-lg); line-height: var(--leading-relaxed); }
+
+/* --- Footer --- */
+.footer_component { border-top: 1px solid var(--color-border); }
+.footer_top       { display: flex; flex-wrap: wrap; gap: var(--space-12); }
+.footer_logo      { display: flex; align-items: center; text-decoration: none; }
+.footer_tagline   { font-size: var(--text-sm); color: var(--color-text-light); }
+.footer_nav-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-wide); text-transform: uppercase; }
+.footer_nav-list  { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.footer_nav-link  { font-size: var(--text-sm); color: var(--color-text-light); text-decoration: none; transition: color var(--ease-fast); }
+.footer_nav-link:hover { color: var(--color-text); }
+.footer_bottom    { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); border-top: 1px solid var(--color-border); }
+.footer_copyright { font-size: var(--text-sm); color: var(--color-text-light); }
+
+/* --- Testimonial --- */
+.testimonial_component { display: flex; flex-direction: column; gap: var(--space-4); }
+.testimonial_quote     { font-size: var(--text-lg); line-height: var(--leading-relaxed); }
+.testimonial_author    { display: flex; align-items: center; gap: var(--space-3); }
+.testimonial_image     { width: 3rem; height: 3rem; border-radius: var(--radius-full); object-fit: cover; }
+.testimonial_name      { font-weight: var(--weight-semibold); }
+.testimonial_role      { font-size: var(--text-sm); color: var(--color-text-light); }
+
+/* --- FAQ --- */
+.faq_component { border-top: 1px solid var(--color-border); }
+.faq_item      { border-bottom: 1px solid var(--color-border); }
+.faq_trigger   { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) 0; cursor: pointer; font-weight: var(--weight-medium); background: none; border: none; text-align: left; }
+.faq_answer    { padding-bottom: var(--space-5); font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--color-text-light); }
+
+/* --- Rich text (WordPress content blokken) --- */
+.rich-text h1, .rich-text h2, .rich-text h3,
+.rich-text h4, .rich-text h5, .rich-text h6 {
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-4);
+}
+.rich-text p            { line-height: var(--leading-relaxed); margin-bottom: var(--space-4); }
+.rich-text ul,
+.rich-text ol           { padding-left: var(--space-6); margin-bottom: var(--space-4); }
+.rich-text li           { line-height: var(--leading-relaxed); margin-bottom: var(--space-2); }
+.rich-text a            { color: var(--color-primary); text-decoration: underline; }
+.rich-text strong       { font-weight: var(--weight-bold); }
+.rich-text blockquote   {
+  border-left: 3px solid var(--color-primary);
+  padding-left: var(--space-6);
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--color-text-light);
+  margin: var(--space-8) 0;
+}
+
+
+/* ============================================================
+   15. RESPONSIVE â€” BRICKS BREAKPOINTS
+   1200px Tablet landscape
+    992px Tablet portrait
+    768px Mobiel landscape
+    480px Mobiel portrait
+   ============================================================ */
+
+@media (min-width: 992px) {
+  :root { --padding-global: 2.5rem; }
+}
+
+@media (max-width: 1200px) {
+  .padding-section-large  { padding-top: var(--space-24); padding-bottom: var(--space-24); }
+  .grid-cols-4            { grid-template-columns: repeat(2, 1fr); }
+  .hero_title             { font-size: var(--text-4xl); }
+  .section-header_title   { font-size: var(--text-3xl); }
+}
+
+@media (max-width: 992px) {
+  .padding-section-medium { padding-top: var(--space-16); padding-bottom: var(--space-16); }
+  .padding-section-large  { padding-top: var(--space-20); padding-bottom: var(--space-20); }
+  .grid-cols-3            { grid-template-columns: repeat(2, 1fr); }
+  .hero_title             { font-size: var(--text-3xl); }
+  .nav_menu               { display: none; }
+}
+
+@media (max-width: 768px) {
+  :root { --padding-global: 1rem; }
+  .padding-section-small  { padding-top: var(--space-8);  padding-bottom: var(--space-8); }
+  .padding-section-medium { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+  .padding-section-large  { padding-top: var(--space-16); padding-bottom: var(--space-16); }
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4            { grid-template-columns: repeat(1, 1fr); }
+  .hero_title             { font-size: var(--text-2xl); }
+  .hero_buttons           { flex-direction: column; align-items: stretch; }
+  .section-header_title   { font-size: var(--text-2xl); }
+  .footer_top             { flex-direction: column; }
+
+  .hide-mobile        { display: none !important; }
+  .show-mobile        { display: block !important; }
+  .full-width-mobile  { width: 100% !important; }
+  .text-center-mobile { text-align: center !important; }
+  .flex-column-mobile { flex-direction: column !important; }
+}
+
+@media (max-width: 480px) {
+  .hero_title       { font-size: var(--text-xl); }
+  .button-primary,
+  .button-secondary { width: 100%; justify-content: center; }
+  .hide-tiny        { display: none !important; }
+}
+
+@media (min-width: 993px) {
+  .hide-desktop { display: none !important; }
+}
+
+
+/* ============================================================
+   16. HELPER UTILITIES
+   ============================================================ */
+
+.object-fit-cover    { object-fit: cover; }
+.object-fit-contain  { object-fit: contain; }
+.object-position-center { object-position: center; }
+.object-position-top    { object-position: top; }
+
+.ratio-square    { aspect-ratio: 1 / 1; }
+.ratio-landscape { aspect-ratio: 4 / 3; }
+.ratio-video     { aspect-ratio: 16 / 9; }
+.ratio-portrait  { aspect-ratio: 3 / 4; }
+
+.text-truncate   { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.text-no-wrap    { white-space: nowrap; }
+.text-wrap-balance { text-wrap: balance; }
+
+.cursor-pointer  { cursor: pointer; }
+.user-select-none { user-select: none; }
+
+.transition-fast { transition: all var(--ease-fast); }
+.transition-base { transition: all var(--ease-base); }
+.transition-slow { transition: all var(--ease-slow); }
+
+.shadow-small  { box-shadow: var(--shadow-small); }
+.shadow-medium { box-shadow: var(--shadow-medium); }
+.shadow-large  { box-shadow: var(--shadow-large); }
+.shadow-none   { box-shadow: none; }
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  background-color: var(--color-neutral-light);
+  color: var(--color-text);
+}
+
+/* ============================================================
+   EINDE â€” HAVESOME-T CLIENT-FIRST FRAMEWORK v2.0
+   github.com/havesome-t/bricks-framework
+   ============================================================ */
