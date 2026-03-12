@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Havesome-t Framework — Stijlgids</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ── Reset ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── Tokens ── */
+  :root {
+    --color-primary:       #000000;
+    --color-primary-hover: #222222;
+    --color-secondary:     #ffffff;
+    --color-accent:        #000000;
+    --color-text:          #1a1a1a;
+    --color-text-muted:    #6b6b6b;
+    --color-bg:            #ffffff;
+    --color-bg-alt:        #f5f5f5;
+    --color-border:        #e0e0e0;
+
+    --space-1:  0.25rem;
+    --space-2:  0.5rem;
+    --space-3:  0.75rem;
+    --space-4:  1rem;
+    --space-5:  1.25rem;
+    --space-6:  1.5rem;
+    --space-8:  2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+    --space-32: 8rem;
+
+    --text-xs:   0.75rem;
+    --text-sm:   0.875rem;
+    --text-base: 1rem;
+    --text-md:   1.125rem;
+    --text-lg:   1.25rem;
+    --text-xl:   1.5rem;
+    --text-2xl:  2rem;
+    --text-3xl:  2.5rem;
+    --text-4xl:  3rem;
+    --text-5xl:  3.75rem;
+
+    --radius-sm:   4px;
+    --radius-md:   8px;
+    --radius-lg:   12px;
+    --radius-xl:   16px;
+    --radius-full: 9999px;
+
+    --transition-base: 250ms ease;
+
+    --sidebar-w: 220px;
+    --font-display: 'Syne', sans-serif;
+    --font-mono:    'DM Mono', monospace;
+  }
+
+  /* ── Base ── */
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-display);
+    background: #f8f7f4;
+    color: var(--color-text);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: #0e0e0e;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-8) var(--space-6);
+    z-index: 100;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    font-size: var(--text-sm);
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: var(--space-2);
+  }
+  .sidebar-sub {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: #666;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-10);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid #222;
+  }
+  .sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: var(--space-1); }
+  .sidebar-nav a {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #888;
+    text-decoration: none;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.04em;
+    transition: all var(--transition-base);
+  }
+  .sidebar-nav a:hover { color: #fff; background: #1a1a1a; }
+  .sidebar-nav .nav-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: #444;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: var(--space-4) var(--space-3) var(--space-1);
+  }
+  .sidebar-version {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: #333;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Main ── */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: var(--space-12) var(--space-12);
+    max-width: 960px;
+  }
+
+  /* ── Section ── */
+  .sg-section {
+    margin-bottom: var(--space-20);
+    scroll-margin-top: var(--space-8);
+  }
+  .sg-section-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sg-section-title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .sg-section-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── Card ── */
+  .sg-card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    margin-bottom: var(--space-4);
+  }
+  .sg-card-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-6);
+  }
+
+  /* ── Hero ── */
+  .sg-hero {
+    background: #0e0e0e;
+    color: #fff;
+    border-radius: var(--radius-xl);
+    padding: var(--space-16) var(--space-12);
+    margin-bottom: var(--space-16);
+    position: relative;
+    overflow: hidden;
+  }
+  .sg-hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .sg-hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: var(--space-4);
+  }
+  .sg-hero h1 {
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-bottom: var(--space-4);
+  }
+  .sg-hero p {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: #888;
+    max-width: 480px;
+    line-height: 1.7;
+  }
+  .sg-hero-url {
+    display: inline-block;
+    margin-top: var(--space-6);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: #444;
+    background: #1a1a1a;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.04em;
+    word-break: break-all;
+  }
+
+  /* ── Colors ── */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-4);
+  }
+  .color-swatch {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+  }
+  .color-swatch-preview {
+    height: 72px;
+  }
+  .color-swatch-info {
+    padding: var(--space-3);
+    background: #fff;
+  }
+  .color-swatch-name {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--color-text);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .color-swatch-value {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-text-muted);
+  }
+
+  /* ── Typography ── */
+  .type-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-6);
+    padding: var(--space-5) 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta {
+    width: 120px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .type-class {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: #0066cc;
+    background: #e8f0fe;
+    padding: 2px 6px;
+    border-radius: 3px;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .type-size {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-text-muted);
+  }
+  .type-sample { flex: 1; }
+
+  /* ── Spacing ── */
+  .spacing-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .spacing-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .spacing-bar-wrap { flex: 1; }
+  .spacing-bar {
+    height: 24px;
+    background: #0e0e0e;
+    border-radius: 3px;
+  }
+  .spacing-label {
+    width: 80px;
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: #0066cc;
+    background: #e8f0fe;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-align: center;
+  }
+  .spacing-value {
+    width: 60px;
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-text-muted);
+  }
+
+  /* ── Buttons ── */
+  .btn-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3) var(--space-6);
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 500;
+    line-height: 1;
+    border-radius: var(--radius-md);
+    border: 2px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--transition-base);
+    white-space: nowrap;
+  }
+  .btn-primary   { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+  .btn-primary:hover { background: #333; border-color: #333; }
+  .btn-secondary { background: transparent; color: var(--color-primary); border-color: var(--color-primary); }
+  .btn-secondary:hover { background: var(--color-primary); color: #fff; }
+  .btn-sm { padding: var(--space-2) var(--space-4); font-size: var(--text-sm); }
+  .btn-lg { padding: var(--space-4) var(--space-8); font-size: var(--text-md); }
+
+  /* ── Grid demo ── */
+  .grid-demo { display: grid; gap: var(--space-3); }
+  .grid-cell {
+    background: #0e0e0e;
+    color: #fff;
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-align: center;
+    letter-spacing: 0.06em;
+  }
+  .grid-cell.light {
+    background: #f0f0f0;
+    color: #888;
+  }
+
+  /* ── Code chip ── */
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    background: #f0f0f0;
+    color: #333;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  /* ── Radius demo ── */
+  .radius-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    align-items: flex-end;
+  }
+  .radius-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .radius-preview {
+    width: 64px;
+    height: 64px;
+    background: #0e0e0e;
+  }
+  .radius-meta {
+    text-align: center;
+  }
+  .radius-class { font-family: var(--font-mono); font-size: 0.6rem; color: #0066cc; background: #e8f0fe; padding: 1px 5px; border-radius: 3px; display: block; }
+  .radius-val   { font-family: var(--font-mono); font-size: 0.58rem; color: var(--color-text-muted); display: block; margin-top: 2px; }
+
+  /* ── Scrollbar ── */
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; padding: var(--space-8) var(--space-6); }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">Havesome-t</div>
+  <div class="sidebar-sub">Bricks Framework v1.0</div>
+  <ul class="sidebar-nav">
+    <li class="nav-label">Fundament</li>
+    <li><a href="#kleuren">Kleuren</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#spacing">Spacing</a></li>
+    <li class="nav-label">Componenten</li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#grid">Grid</a></li>
+    <li><a href="#radius">Border Radius</a></li>
+    <li class="nav-label">Referentie</li>
+    <li><a href="#classes">Alle Classes</a></li>
+  </ul>
+  <div class="sidebar-version">github.com/havesome-t/<br>bricks-framework</div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="sg-hero">
+    <div class="sg-hero-eyebrow">Stijlgids — Visuele Documentatie</div>
+    <h1>Havesome-t<br>Framework</h1>
+    <p>Jouw persoonlijke Client-First utility systeem voor Bricks Builder. Alle tokens, classes en componenten op één plek.</p>
+    <span class="sg-hero-url">https://raw.githubusercontent.com/havesome-t/bricks-framework/refs/heads/main/framework.css</span>
+  </div>
+
+  <!-- KLEUREN -->
+  <section class="sg-section" id="kleuren">
+    <div class="sg-section-header">
+      <h2 class="sg-section-title">Kleuren</h2>
+      <span class="sg-section-tag">Design Tokens</span>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">Project kleuren — overschrijf per project via :root</div>
+      <div class="color-grid">
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background:#000000"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">--color-primary</span>
+            <span class="color-swatch-value">#000000</span>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background:#ffffff;border-bottom:1px solid #e0e0e0"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">--color-secondary</span>
+            <span class="color-swatch-value">#ffffff</span>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background:#1a1a1a"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">--color-text</span>
+            <span class="color-swatch-value">#1a1a1a</span>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background:#6b6b6b"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">--color-text-muted</span>
+            <span class="color-swatch-value">#6b6b6b</span>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background:#f5f5f5;border-bottom:1px solid #e0e0e0"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">--color-bg-alt</span>
+            <span class="color-swatch-value">#f5f5f5</span>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background:#e0e0e0"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">--color-border</span>
+            <span class="color-swatch-value">#e0e0e0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">Utility classes</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+        <span style="background:#000;color:#fff;padding:6px 12px;border-radius:4px;font-family:var(--font-mono);font-size:0.7rem">.bg-primary</span>
+        <span style="background:#f5f5f5;padding:6px 12px;border-radius:4px;font-family:var(--font-mono);font-size:0.7rem;border:1px solid #e0e0e0">.bg-light</span>
+        <span style="background:#fff;padding:6px 12px;border-radius:4px;font-family:var(--font-mono);font-size:0.7rem;border:1px solid #e0e0e0">.bg-white</span>
+        <span style="background:#1a1a1a;color:#fff;padding:6px 12px;border-radius:4px;font-family:var(--font-mono);font-size:0.7rem">.bg-dark</span>
+        <span style="color:#000;font-family:var(--font-mono);font-size:0.7rem">.text-primary</span>
+        <span style="color:#6b6b6b;font-family:var(--font-mono);font-size:0.7rem">.text-muted</span>
+        <span style="background:#1a1a1a;color:#fff;font-family:var(--font-mono);font-size:0.7rem;padding:3px 8px;border-radius:3px">.text-white</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section class="sg-section" id="typography">
+    <div class="sg-section-header">
+      <h2 class="sg-section-title">Typography</h2>
+      <span class="sg-section-tag">Font Scale — rem based</span>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">Type scale</div>
+      <div class="type-row">
+        <div class="type-meta"><span class="type-class">.text-5xl</span><span class="type-size">3.75rem / 60px</span></div>
+        <div class="type-sample" style="font-size:3.75rem;font-weight:700;line-height:1.1;letter-spacing:-0.03em">Heading</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="type-class">.text-4xl</span><span class="type-size">3rem / 48px</span></div>
+        <div class="type-sample" style="font-size:3rem;font-weight:700;line-height:1.1;letter-spacing:-0.03em">Heading</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="type-class">.text-3xl</span><span class="type-size">2.5rem / 40px</span></div>
+        <div class="type-sample" style="font-size:2.5rem;font-weight:700;line-height:1.2">Heading</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="type-class">.text-2xl</span><span class="type-size">2rem / 32px</span></div>
+        <div class="type-sample" style="font-size:2rem;font-weight:600">Subheading</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="type-class">.text-xl</span><span class="type-size">1.5rem / 24px</span></div>
+        <div class="type-sample" style="font-size:1.5rem;font-weight:600">Subheading</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="type-class">.text-lg</span><span class="type-size">1.25rem / 20px</span></div>
+        <div class="type-sample" style="font-size:1.25rem">Lead paragraph tekst</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="type-class">.text-md</span><span class="type-size">1.125rem / 18px</span></div>
+        <div class="type-sample" style="font-size:1.125rem">Body tekst groter</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="type-class">.text-base</span><span class="type-size">1rem / 16px</span></div>
+        <div class="type-sample" style="font-size:1rem">Body tekst standaard. Dit is de basis van alle lopende tekst op de pagina.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="type-class">.text-sm</span><span class="type-size">0.875rem / 14px</span></div>
+        <div class="type-sample" style="font-size:0.875rem">Caption, label, meta informatie</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="type-class">.text-xs</span><span class="type-size">0.75rem / 12px</span></div>
+        <div class="type-sample" style="font-size:0.75rem;color:#6b6b6b">Micro tekst, timestamps, disclaimers</div>
+      </div>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">Font weights & line heights</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <div>
+          <div style="margin-bottom:12px;font-family:var(--font-mono);font-size:0.6rem;color:#888;text-transform:uppercase;letter-spacing:0.1em">Weights</div>
+          <div style="font-size:1.25rem;font-weight:400;margin-bottom:8px">Regular — 400 <code>.font-regular</code></div>
+          <div style="font-size:1.25rem;font-weight:500;margin-bottom:8px">Medium — 500 <code>.font-medium</code></div>
+          <div style="font-size:1.25rem;font-weight:600;margin-bottom:8px">Semibold — 600 <code>.font-semibold</code></div>
+          <div style="font-size:1.25rem;font-weight:700">Bold — 700 <code>.font-bold</code></div>
+        </div>
+        <div>
+          <div style="margin-bottom:12px;font-family:var(--font-mono);font-size:0.6rem;color:#888;text-transform:uppercase;letter-spacing:0.1em">Line heights</div>
+          <div style="line-height:1.2;margin-bottom:12px;font-size:0.9rem">Tight 1.2 — .leading-tight<br>Compact koppen</div>
+          <div style="line-height:1.5;margin-bottom:12px;font-size:0.9rem">Normal 1.5 — .leading-normal<br>Standaard body tekst</div>
+          <div style="line-height:1.7;font-size:0.9rem">Relaxed 1.7 — .leading-relaxed<br>Longform, leesbare tekst</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPACING -->
+  <section class="sg-section" id="spacing">
+    <div class="sg-section-header">
+      <h2 class="sg-section-title">Spacing</h2>
+      <span class="sg-section-tag">Rem scale — 4px basis</span>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">Spacing scale visualisatie</div>
+      <div class="spacing-grid">
+        <div class="spacing-row">
+          <div class="spacing-label">--space-1</div>
+          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:4px"></div></div>
+          <div class="spacing-value">0.25rem / 4px</div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-label">--space-2</div>
+          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:8px"></div></div>
+          <div class="spacing-value">0.5rem / 8px</div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-label">--space-4</div>
+          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:16px"></div></div>
+          <div class="spacing-value">1rem / 16px</div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-label">--space-6</div>
+          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:24px"></div></div>
+          <div class="spacing-value">1.5rem / 24px</div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-label">--space-8</div>
+          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:32px"></div></div>
+          <div class="spacing-value">2rem / 32px</div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-label">--space-12</div>
+          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:48px"></div></div>
+          <div class="spacing-value">3rem / 48px</div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-label">--space-16</div>
+          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:64px"></div></div>
+          <div class="spacing-value">4rem / 64px</div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-label">--space-20</div>
+          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:80px"></div></div>
+          <div class="spacing-value">5rem / 80px</div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-label">--space-24</div>
+          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:96px"></div></div>
+          <div class="spacing-value">6rem / 96px</div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-label">--space-32</div>
+          <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:128px"></div></div>
+          <div class="spacing-value">8rem / 128px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">Gebruik — padding &amp; margin classes</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2;color:#333;">
+        <span style="color:#0066cc">.p-{n}</span> &nbsp;padding alle kanten &nbsp;|&nbsp;
+        <span style="color:#0066cc">.px-{n}</span> &nbsp;padding links+rechts &nbsp;|&nbsp;
+        <span style="color:#0066cc">.py-{n}</span> &nbsp;padding top+bottom<br>
+        <span style="color:#0066cc">.pt-{n}</span> &nbsp;padding top &nbsp;|&nbsp;
+        <span style="color:#0066cc">.pb-{n}</span> &nbsp;padding bottom<br>
+        <span style="color:#0066cc">.mt-{n}</span> &nbsp;margin top &nbsp;|&nbsp;
+        <span style="color:#0066cc">.mb-{n}</span> &nbsp;margin bottom &nbsp;|&nbsp;
+        <span style="color:#0066cc">.mx-auto</span> &nbsp;centreert element<br>
+        <span style="color:#0066cc">.gap-{n}</span> &nbsp;gap voor flex/grid &nbsp;|&nbsp;
+        beschikbare nummers: <strong>0 1 2 3 4 5 6 8 10 12 16 20 24 32</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUTTONS -->
+  <section class="sg-section" id="buttons">
+    <div class="sg-section-header">
+      <h2 class="sg-section-title">Buttons</h2>
+      <span class="sg-section-tag">CTA componenten</span>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">Varianten</div>
+      <div class="btn-grid">
+        <a href="#" class="btn btn-primary">Primary</a>
+        <a href="#" class="btn btn-secondary">Secondary</a>
+        <a href="#" class="btn btn-primary btn-sm">Small</a>
+        <a href="#" class="btn btn-primary btn-lg">Large</a>
+      </div>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">Classes — combineer altijd .btn met een variant</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333;">
+        <code>.btn</code> basis class — altijd vereist<br>
+        <code>.btn-primary</code> gevulde knop in primary kleur<br>
+        <code>.btn-secondary</code> outline knop<br>
+        <code>.btn-white</code> voor op donkere achtergrond<br>
+        <code>.btn-sm</code> klein formaat<br>
+        <code>.btn-lg</code> groot formaat<br>
+        <code>.btn-full</code> volle breedte
+      </div>
+    </div>
+  </section>
+
+  <!-- GRID -->
+  <section class="sg-section" id="grid">
+    <div class="sg-section-header">
+      <h2 class="sg-section-title">Grid & Flex</h2>
+      <span class="sg-section-tag">Layout systeem</span>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">.grid-cols-3 — 3 kolommen</div>
+      <div class="grid-demo" style="grid-template-columns:repeat(3,1fr)">
+        <div class="grid-cell">col 1</div>
+        <div class="grid-cell">col 2</div>
+        <div class="grid-cell">col 3</div>
+      </div>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">.grid-cols-4 — 4 kolommen</div>
+      <div class="grid-demo" style="grid-template-columns:repeat(4,1fr)">
+        <div class="grid-cell">col 1</div>
+        <div class="grid-cell">col 2</div>
+        <div class="grid-cell">col 3</div>
+        <div class="grid-cell">col 4</div>
+      </div>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">.col-span — kolommen overbruggen</div>
+      <div class="grid-demo" style="grid-template-columns:repeat(4,1fr)">
+        <div class="grid-cell" style="grid-column:span 3">.col-span-3</div>
+        <div class="grid-cell light">col</div>
+        <div class="grid-cell light">col</div>
+        <div class="grid-cell" style="grid-column:span 2">.col-span-2</div>
+        <div class="grid-cell light">col</div>
+      </div>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">Flex utilities</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333">
+        <code>.flex</code> display flex &nbsp;|&nbsp; <code>.flex-col</code> verticaal &nbsp;|&nbsp; <code>.flex-wrap</code> wrappen<br>
+        <code>.items-center</code> verticaal centreren &nbsp;|&nbsp; <code>.items-start</code> &nbsp;|&nbsp; <code>.items-end</code><br>
+        <code>.justify-between</code> &nbsp;|&nbsp; <code>.justify-center</code> &nbsp;|&nbsp; <code>.justify-end</code><br>
+        <code>.flex-1</code> neemt beschikbare ruimte &nbsp;|&nbsp; <code>.flex-none</code> vaste breedte
+      </div>
+    </div>
+  </section>
+
+  <!-- BORDER RADIUS -->
+  <section class="sg-section" id="radius">
+    <div class="sg-section-header">
+      <h2 class="sg-section-title">Border Radius</h2>
+      <span class="sg-section-tag">Afronding</span>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">Radius scale</div>
+      <div class="radius-grid">
+        <div class="radius-box">
+          <div class="radius-preview" style="border-radius:0"></div>
+          <div class="radius-meta"><span class="radius-class">.no-radius</span><span class="radius-val">0px</span></div>
+        </div>
+        <div class="radius-box">
+          <div class="radius-preview" style="border-radius:4px"></div>
+          <div class="radius-meta"><span class="radius-class">.rounded-sm</span><span class="radius-val">4px</span></div>
+        </div>
+        <div class="radius-box">
+          <div class="radius-preview" style="border-radius:8px"></div>
+          <div class="radius-meta"><span class="radius-class">.rounded-md</span><span class="radius-val">8px</span></div>
+        </div>
+        <div class="radius-box">
+          <div class="radius-preview" style="border-radius:12px"></div>
+          <div class="radius-meta"><span class="radius-class">.rounded-lg</span><span class="radius-val">12px</span></div>
+        </div>
+        <div class="radius-box">
+          <div class="radius-preview" style="border-radius:16px"></div>
+          <div class="radius-meta"><span class="radius-class">.rounded-xl</span><span class="radius-val">16px</span></div>
+        </div>
+        <div class="radius-box">
+          <div class="radius-preview" style="border-radius:9999px"></div>
+          <div class="radius-meta"><span class="radius-class">.rounded-full</span><span class="radius-val">9999px</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALLE CLASSES -->
+  <section class="sg-section" id="classes">
+    <div class="sg-section-header">
+      <h2 class="sg-section-title">Alle Classes</h2>
+      <span class="sg-section-tag">Snelle referentie</span>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">Containers</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333">
+        <code>.container</code> max 1200px gecentreerd &nbsp;|&nbsp;
+        <code>.container-sm</code> 640px &nbsp;|&nbsp;
+        <code>.container-md</code> 768px<br>
+        <code>.container-lg</code> 1024px &nbsp;|&nbsp;
+        <code>.container-2xl</code> 1400px &nbsp;|&nbsp;
+        <code>.container-fluid</code> volledige breedte
+      </div>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">Secties</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333">
+        <code>.section</code> padding top/bottom 5rem &nbsp;|&nbsp;
+        <code>.section-sm</code> 3rem &nbsp;|&nbsp;
+        <code>.section-lg</code> 8rem<br>
+        Responsive: verkleint automatisch op kleinere schermen
+      </div>
+    </div>
+
+    <div class="sg-card">
+      <div class="sg-card-label">Overige utilities</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333">
+        <code>.w-full</code> breedte 100% &nbsp;|&nbsp;
+        <code>.h-full</code> hoogte 100% &nbsp;|&nbsp;
+        <code>.hidden</code> verbergen<br>
+        <code>.relative</code> / <code>.absolute</code> / <code>.fixed</code> / <code>.sticky</code> positionering<br>
+        <code>.overflow-hidden</code> &nbsp;|&nbsp;
+        <code>.truncate</code> tekst afkappen met ellipsis<br>
+        <code>.ratio-16-9</code> / <code>.ratio-4-3</code> / <code>.ratio-1-1</code> aspect ratios voor afbeeldingen<br>
+        <code>.object-cover</code> / <code>.object-contain</code> afbeelding vulling<br>
+        <code>.hidden-mobile</code> verbergen op mobiel &nbsp;|&nbsp;
+        <code>.full-mobile</code> volle breedte op mobiel<br>
+        <code>.text-center-mobile</code> centreren op mobiel &nbsp;|&nbsp;
+        <code>.flex-col-mobile</code> kolom op mobiel
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+</body>
+</html>
