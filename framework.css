@@ -1,334 +1,467 @@
 /* ============================================================
-   HAVESOME-T BRICKS FRAMEWORK
-   Client-First utility system voor Bricks Builder
+   HAVESOME-T â€” CLIENT-FIRST FRAMEWORK v2.0
+   Gebaseerd op Finsweet Client-First principes
+   Gebouwd voor Bricks Builder + WordPress + Webflow
    github.com/havesome-t/bricks-framework
+
+   NAAMGEVING SYSTEEM
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   Custom classes  â†’ gebruiken underscore  â†’ hero_content
+   Utility classes â†’ geen underscore       â†’ text-size-large
+   Combo classes   â†’ prefix is-            â†’ is-white, is-large
+
+   CORE STRUCTURE VOLGORDE
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   page-wrapper
+   â””â”€â”€ main-wrapper
+       â””â”€â”€ section-[naam]
+           â””â”€â”€ padding-global
+               â””â”€â”€ container-large / container-medium / container-small
+                   â””â”€â”€ jouw content
+
+   INHOUDSOPGAVE
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   1.  CSS VARIABELEN
+   2.  CORE STRUCTURE
+   3.  SPACING UTILITY SYSTEEM
+   4.  TYPOGRAPHY UTILITY SYSTEEM
+   5.  KLEUR UTILITY SYSTEEM
+   6.  ACHTERGROND UTILITY SYSTEEM
+   7.  LAYOUT UTILITY SYSTEEM
+   8.  SIZING UTILITY SYSTEEM
+   9.  VISIBILITY UTILITY SYSTEEM
+   10. BORDER & RADIUS UTILITY SYSTEEM
+   11. BUTTON SYSTEEM
+   12. FORM UTILITY SYSTEEM
+   13. POSITIE UTILITY SYSTEEM
+   14. COMPONENT BASISKLASSEN
+   15. RESPONSIVE â€” BRICKS BREAKPOINTS
+   16. HELPER UTILITIES
    ============================================================ */
 
+
 /* ============================================================
-   1. CSS CUSTOM PROPERTIES (Design Tokens)
+   1. CSS VARIABELEN
+   Overschrijf per project in Bricks â†’ Theme Styles â†’ Custom CSS
    ============================================================ */
 
 :root {
 
-  /* --- Spacing scale (rem) --- */
-  --space-1:   0.25rem;   /*  4px */
-  --space-2:   0.5rem;    /*  8px */
-  --space-3:   0.75rem;   /* 12px */
-  --space-4:   1rem;      /* 16px */
-  --space-5:   1.25rem;   /* 20px */
-  --space-6:   1.5rem;    /* 24px */
-  --space-8:   2rem;      /* 32px */
-  --space-10:  2.5rem;    /* 40px */
-  --space-12:  3rem;      /* 48px */
-  --space-16:  4rem;      /* 64px */
-  --space-20:  5rem;      /* 80px */
-  --space-24:  6rem;      /* 96px */
-  --space-32:  8rem;      /* 128px */
+  /* Kleuren â€” overschrijf per project */
+  --color-primary:          #000000;
+  --color-primary-hover:    #222222;
+  --color-secondary:        #ffffff;
+  --color-accent:           #000000;
 
-  /* --- Typography scale (rem) --- */
-  --text-xs:   0.75rem;   /* 12px */
-  --text-sm:   0.875rem;  /* 14px */
-  --text-base: 1rem;      /* 16px */
-  --text-md:   1.125rem;  /* 18px */
-  --text-lg:   1.25rem;   /* 20px */
-  --text-xl:   1.5rem;    /* 24px */
-  --text-2xl:  2rem;      /* 32px */
-  --text-3xl:  2.5rem;    /* 40px */
-  --text-4xl:  3rem;      /* 48px */
-  --text-5xl:  3.75rem;   /* 60px */
+  /* Neutrale kleuren */
+  --color-neutral-lightest: #f8f8f8;
+  --color-neutral-light:    #f0f0f0;
+  --color-neutral-medium:   #d0d0d0;
+  --color-neutral-dark:     #6b6b6b;
+  --color-neutral-darkest:  #1a1a1a;
 
-  /* --- Line heights --- */
-  --leading-tight:  1.2;
-  --leading-snug:   1.35;
-  --leading-normal: 1.5;
-  --leading-relaxed:1.7;
+  /* Semantische kleuren */
+  --color-text:             #1a1a1a;
+  --color-text-light:       #6b6b6b;
+  --color-text-inverse:     #ffffff;
+  --color-bg:               #ffffff;
+  --color-bg-alt:           #f5f5f5;
+  --color-border:           #e0e0e0;
+  --color-border-dark:      #c0c0c0;
 
-  /* --- Font weights --- */
-  --weight-regular: 400;
-  --weight-medium:  500;
-  --weight-semibold:600;
-  --weight-bold:    700;
+  /* Status */
+  --color-success:          #22c55e;
+  --color-warning:          #f59e0b;
+  --color-error:            #ef4444;
 
-  /* --- Border radius --- */
-  --radius-sm:   4px;
-  --radius-md:   8px;
-  --radius-lg:   12px;
-  --radius-xl:   16px;
-  --radius-full: 9999px;
+  /* Spacing schaal rem â€” 1rem = 16px */
+  --space-0:    0;
+  --space-1:    0.25rem;
+  --space-2:    0.5rem;
+  --space-3:    0.75rem;
+  --space-4:    1rem;
+  --space-5:    1.25rem;
+  --space-6:    1.5rem;
+  --space-8:    2rem;
+  --space-10:   2.5rem;
+  --space-12:   3rem;
+  --space-16:   4rem;
+  --space-20:   5rem;
+  --space-24:   6rem;
+  --space-28:   7rem;
+  --space-32:   8rem;
+  --space-40:   10rem;
 
-  /* --- Transitions --- */
-  --transition-fast:   150ms ease;
-  --transition-base:   250ms ease;
-  --transition-slow:   400ms ease;
+  /* Typography schaal â€” rem, geen clamp */
+  --text-xs:    0.75rem;
+  --text-sm:    0.875rem;
+  --text-base:  1rem;
+  --text-md:    1.125rem;
+  --text-lg:    1.25rem;
+  --text-xl:    1.5rem;
+  --text-2xl:   2rem;
+  --text-3xl:   2.5rem;
+  --text-4xl:   3rem;
+  --text-5xl:   3.75rem;
+  --text-6xl:   4.5rem;
 
-  /* --- Container --- */
-  --container-sm:  640px;
-  --container-md:  768px;
-  --container-lg:  1024px;
-  --container-xl:  1200px;
-  --container-2xl: 1400px;
+  /* Line heights */
+  --leading-none:    1;
+  --leading-tight:   1.2;
+  --leading-snug:    1.35;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;
+  --leading-loose:   2;
 
-  /* --- Project colors (overschrijf per project) --- */
-  --color-primary:     #000000;
-  --color-primary-hover: #222222;
-  --color-secondary:   #ffffff;
-  --color-accent:      #000000;
-  --color-text:        #1a1a1a;
-  --color-text-muted:  #6b6b6b;
-  --color-bg:          #ffffff;
-  --color-bg-alt:      #f5f5f5;
-  --color-border:      #e0e0e0;
+  /* Font weights */
+  --weight-light:    300;
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-black:    900;
+
+  /* Letter spacing */
+  --tracking-tight:   -0.03em;
+  --tracking-snug:    -0.01em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.05em;
+  --tracking-wider:   0.1em;
+  --tracking-widest:  0.15em;
+
+  /* Container breedtes */
+  --container-xsmall: 480px;
+  --container-small:  640px;
+  --container-medium: 860px;
+  --container-large:  1200px;
+  --container-xlarge: 1400px;
+
+  /* Globale padding links + rechts */
+  --padding-global: 1.25rem;
+
+  /* Border radius */
+  --radius-small:  4px;
+  --radius-medium: 8px;
+  --radius-large:  12px;
+  --radius-xlarge: 16px;
+  --radius-full:   9999px;
+
+  /* Transitions */
+  --ease-fast:   150ms ease;
+  --ease-base:   250ms ease;
+  --ease-slow:   400ms ease;
+  --ease-slower: 600ms ease;
+
+  /* Shadows */
+  --shadow-small:  0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-medium: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-large:  0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06);
 }
 
 
 /* ============================================================
-   2. CONTAINERS
+   2. CORE STRUCTURE
+   De vaste lagenstructuur â€” gebruik altijd in deze volgorde.
    ============================================================ */
 
-.container {
+/* Laag 1 â€” omsluit de hele pagina */
+.page-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Laag 2 â€” main content exclusief nav en footer */
+.main-wrapper {
+  /* Geen standaard stijlen â€” alleen semantisch */
+}
+
+/* Laag 3 â€” secties organiseren de pagina in blokken */
+/* Geef altijd een beschrijvende naam: section-hero, section-diensten, section-contact */
+/* De section zelf krijgt GEEN padding â€” dat doet padding-global */
+[class*="section-"] {
+  position: relative;
   width: 100%;
-  max-width: var(--container-xl);
-  margin-left: auto;
+}
+
+/* Laag 4 â€” globale horizontale padding */
+/* ALLEEN padding-left en padding-right â€” nooit verticale spacing hier */
+.padding-global {
+  padding-left:  var(--padding-global);
+  padding-right: var(--padding-global);
+}
+
+/* Laag 5 â€” verticale sectie spacing */
+.padding-section-small  { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+.padding-section-medium { padding-top: var(--space-20); padding-bottom: var(--space-20); }
+.padding-section-large  { padding-top: var(--space-32); padding-bottom: var(--space-32); }
+
+/* Laag 6 â€” container centreert content met een max-width */
+.container-xsmall,
+.container-small,
+.container-medium,
+.container-large,
+.container-xlarge {
+  margin-left:  auto;
   margin-right: auto;
-  padding-left: var(--space-6);
-  padding-right: var(--space-6);
-}
-
-.container-sm  { max-width: var(--container-sm);  margin-left: auto; margin-right: auto; }
-.container-md  { max-width: var(--container-md);  margin-left: auto; margin-right: auto; }
-.container-lg  { max-width: var(--container-lg);  margin-left: auto; margin-right: auto; }
-.container-xl  { max-width: var(--container-xl);  margin-left: auto; margin-right: auto; }
-.container-2xl { max-width: var(--container-2xl); margin-left: auto; margin-right: auto; }
-
-.container-fluid {
   width: 100%;
-  padding-left: var(--space-6);
-  padding-right: var(--space-6);
 }
+.container-xsmall { max-width: var(--container-xsmall); }
+.container-small  { max-width: var(--container-small); }
+.container-medium { max-width: var(--container-medium); }
+.container-large  { max-width: var(--container-large); }
+.container-xlarge { max-width: var(--container-xlarge); }
 
 
 /* ============================================================
-   3. SPACING â€” PADDING
+   3. SPACING UTILITY SYSTEEM
    ============================================================ */
 
-.p-0  { padding: 0; }
-.p-1  { padding: var(--space-1); }
-.p-2  { padding: var(--space-2); }
-.p-3  { padding: var(--space-3); }
-.p-4  { padding: var(--space-4); }
-.p-5  { padding: var(--space-5); }
-.p-6  { padding: var(--space-6); }
-.p-8  { padding: var(--space-8); }
-.p-10 { padding: var(--space-10); }
-.p-12 { padding: var(--space-12); }
-.p-16 { padding: var(--space-16); }
-.p-20 { padding: var(--space-20); }
-.p-24 { padding: var(--space-24); }
-.p-32 { padding: var(--space-32); }
+.padding-0   { padding: 0; }
+.padding-4   { padding: var(--space-4); }
+.padding-6   { padding: var(--space-6); }
+.padding-8   { padding: var(--space-8); }
+.padding-12  { padding: var(--space-12); }
+.padding-16  { padding: var(--space-16); }
 
-/* Padding X (horizontal) */
-.px-0  { padding-left: 0; padding-right: 0; }
-.px-4  { padding-left: var(--space-4);  padding-right: var(--space-4); }
-.px-6  { padding-left: var(--space-6);  padding-right: var(--space-6); }
-.px-8  { padding-left: var(--space-8);  padding-right: var(--space-8); }
-.px-10 { padding-left: var(--space-10); padding-right: var(--space-10); }
-.px-12 { padding-left: var(--space-12); padding-right: var(--space-12); }
-.px-16 { padding-left: var(--space-16); padding-right: var(--space-16); }
-.px-20 { padding-left: var(--space-20); padding-right: var(--space-20); }
+.padding-horizontal-4   { padding-left: var(--space-4);  padding-right: var(--space-4); }
+.padding-horizontal-6   { padding-left: var(--space-6);  padding-right: var(--space-6); }
+.padding-horizontal-8   { padding-left: var(--space-8);  padding-right: var(--space-8); }
+.padding-horizontal-12  { padding-left: var(--space-12); padding-right: var(--space-12); }
+.padding-horizontal-16  { padding-left: var(--space-16); padding-right: var(--space-16); }
 
-/* Padding Y (vertical) */
-.py-0  { padding-top: 0; padding-bottom: 0; }
-.py-4  { padding-top: var(--space-4);  padding-bottom: var(--space-4); }
-.py-6  { padding-top: var(--space-6);  padding-bottom: var(--space-6); }
-.py-8  { padding-top: var(--space-8);  padding-bottom: var(--space-8); }
-.py-10 { padding-top: var(--space-10); padding-bottom: var(--space-10); }
-.py-12 { padding-top: var(--space-12); padding-bottom: var(--space-12); }
-.py-16 { padding-top: var(--space-16); padding-bottom: var(--space-16); }
-.py-20 { padding-top: var(--space-20); padding-bottom: var(--space-20); }
-.py-24 { padding-top: var(--space-24); padding-bottom: var(--space-24); }
-.py-32 { padding-top: var(--space-32); padding-bottom: var(--space-32); }
+.padding-vertical-4   { padding-top: var(--space-4);  padding-bottom: var(--space-4); }
+.padding-vertical-6   { padding-top: var(--space-6);  padding-bottom: var(--space-6); }
+.padding-vertical-8   { padding-top: var(--space-8);  padding-bottom: var(--space-8); }
+.padding-vertical-12  { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+.padding-vertical-16  { padding-top: var(--space-16); padding-bottom: var(--space-16); }
+.padding-vertical-20  { padding-top: var(--space-20); padding-bottom: var(--space-20); }
+.padding-vertical-24  { padding-top: var(--space-24); padding-bottom: var(--space-24); }
+.padding-vertical-32  { padding-top: var(--space-32); padding-bottom: var(--space-32); }
 
-/* Padding Top */
-.pt-0  { padding-top: 0; }
-.pt-4  { padding-top: var(--space-4); }
-.pt-6  { padding-top: var(--space-6); }
-.pt-8  { padding-top: var(--space-8); }
-.pt-12 { padding-top: var(--space-12); }
-.pt-16 { padding-top: var(--space-16); }
-.pt-20 { padding-top: var(--space-20); }
-.pt-24 { padding-top: var(--space-24); }
+.padding-top-0   { padding-top: 0; }
+.padding-top-4   { padding-top: var(--space-4); }
+.padding-top-6   { padding-top: var(--space-6); }
+.padding-top-8   { padding-top: var(--space-8); }
+.padding-top-12  { padding-top: var(--space-12); }
+.padding-top-16  { padding-top: var(--space-16); }
+.padding-top-20  { padding-top: var(--space-20); }
+.padding-top-24  { padding-top: var(--space-24); }
 
-/* Padding Bottom */
-.pb-0  { padding-bottom: 0; }
-.pb-4  { padding-bottom: var(--space-4); }
-.pb-6  { padding-bottom: var(--space-6); }
-.pb-8  { padding-bottom: var(--space-8); }
-.pb-12 { padding-bottom: var(--space-12); }
-.pb-16 { padding-bottom: var(--space-16); }
-.pb-20 { padding-bottom: var(--space-20); }
-.pb-24 { padding-bottom: var(--space-24); }
+.padding-bottom-0   { padding-bottom: 0; }
+.padding-bottom-4   { padding-bottom: var(--space-4); }
+.padding-bottom-6   { padding-bottom: var(--space-6); }
+.padding-bottom-8   { padding-bottom: var(--space-8); }
+.padding-bottom-12  { padding-bottom: var(--space-12); }
+.padding-bottom-16  { padding-bottom: var(--space-16); }
+.padding-bottom-20  { padding-bottom: var(--space-20); }
+.padding-bottom-24  { padding-bottom: var(--space-24); }
+
+.margin-auto            { margin: auto; }
+.margin-horizontal-auto { margin-left: auto; margin-right: auto; }
+.margin-0               { margin: 0; }
+
+.margin-top-0   { margin-top: 0; }
+.margin-top-2   { margin-top: var(--space-2); }
+.margin-top-4   { margin-top: var(--space-4); }
+.margin-top-6   { margin-top: var(--space-6); }
+.margin-top-8   { margin-top: var(--space-8); }
+.margin-top-12  { margin-top: var(--space-12); }
+.margin-top-16  { margin-top: var(--space-16); }
+.margin-top-20  { margin-top: var(--space-20); }
+
+.margin-bottom-0   { margin-bottom: 0; }
+.margin-bottom-2   { margin-bottom: var(--space-2); }
+.margin-bottom-4   { margin-bottom: var(--space-4); }
+.margin-bottom-6   { margin-bottom: var(--space-6); }
+.margin-bottom-8   { margin-bottom: var(--space-8); }
+.margin-bottom-12  { margin-bottom: var(--space-12); }
+.margin-bottom-16  { margin-bottom: var(--space-16); }
+.margin-bottom-20  { margin-bottom: var(--space-20); }
+
+.gap-0   { gap: 0; }
+.gap-2   { gap: var(--space-2); }
+.gap-4   { gap: var(--space-4); }
+.gap-6   { gap: var(--space-6); }
+.gap-8   { gap: var(--space-8); }
+.gap-10  { gap: var(--space-10); }
+.gap-12  { gap: var(--space-12); }
+.gap-16  { gap: var(--space-16); }
+.gap-20  { gap: var(--space-20); }
 
 
 /* ============================================================
-   4. SPACING â€” MARGIN
+   4. TYPOGRAPHY UTILITY SYSTEEM
    ============================================================ */
 
-.m-0  { margin: 0; }
-.m-auto { margin: auto; }
-.mx-auto { margin-left: auto; margin-right: auto; }
+.text-size-xsmall  { font-size: var(--text-xs); }
+.text-size-small   { font-size: var(--text-sm); }
+.text-size-regular { font-size: var(--text-base); }
+.text-size-medium  { font-size: var(--text-md); }
+.text-size-large   { font-size: var(--text-lg); }
+.text-size-xlarge  { font-size: var(--text-xl); }
+.text-size-2xlarge { font-size: var(--text-2xl); }
+.text-size-3xlarge { font-size: var(--text-3xl); }
+.text-size-4xlarge { font-size: var(--text-4xl); }
+.text-size-5xlarge { font-size: var(--text-5xl); }
+.text-size-6xlarge { font-size: var(--text-6xl); }
 
-.mt-0  { margin-top: 0; }
-.mt-2  { margin-top: var(--space-2); }
-.mt-4  { margin-top: var(--space-4); }
-.mt-6  { margin-top: var(--space-6); }
-.mt-8  { margin-top: var(--space-8); }
-.mt-10 { margin-top: var(--space-10); }
-.mt-12 { margin-top: var(--space-12); }
-.mt-16 { margin-top: var(--space-16); }
-.mt-20 { margin-top: var(--space-20); }
+.text-weight-light    { font-weight: var(--weight-light); }
+.text-weight-regular  { font-weight: var(--weight-regular); }
+.text-weight-medium   { font-weight: var(--weight-medium); }
+.text-weight-semibold { font-weight: var(--weight-semibold); }
+.text-weight-bold     { font-weight: var(--weight-bold); }
+.text-weight-black    { font-weight: var(--weight-black); }
 
-.mb-0  { margin-bottom: 0; }
-.mb-2  { margin-bottom: var(--space-2); }
-.mb-4  { margin-bottom: var(--space-4); }
-.mb-6  { margin-bottom: var(--space-6); }
-.mb-8  { margin-bottom: var(--space-8); }
-.mb-10 { margin-bottom: var(--space-10); }
-.mb-12 { margin-bottom: var(--space-12); }
-.mb-16 { margin-bottom: var(--space-16); }
-.mb-20 { margin-bottom: var(--space-20); }
+.text-height-tight    { line-height: var(--leading-tight); }
+.text-height-snug     { line-height: var(--leading-snug); }
+.text-height-normal   { line-height: var(--leading-normal); }
+.text-height-relaxed  { line-height: var(--leading-relaxed); }
+.text-height-loose    { line-height: var(--leading-loose); }
 
-/* Gap (voor flex/grid containers) */
-.gap-0  { gap: 0; }
-.gap-2  { gap: var(--space-2); }
-.gap-4  { gap: var(--space-4); }
-.gap-6  { gap: var(--space-6); }
-.gap-8  { gap: var(--space-8); }
-.gap-10 { gap: var(--space-10); }
-.gap-12 { gap: var(--space-12); }
-.gap-16 { gap: var(--space-16); }
+.text-spacing-tight   { letter-spacing: var(--tracking-tight); }
+.text-spacing-normal  { letter-spacing: var(--tracking-normal); }
+.text-spacing-wide    { letter-spacing: var(--tracking-wide); }
+.text-spacing-wider   { letter-spacing: var(--tracking-wider); }
+.text-spacing-widest  { letter-spacing: var(--tracking-widest); }
+
+.text-align-left    { text-align: left; }
+.text-align-center  { text-align: center; }
+.text-align-right   { text-align: right; }
+
+.text-transform-uppercase  { text-transform: uppercase; }
+.text-transform-none       { text-transform: none; }
+.text-style-italic         { font-style: italic; }
 
 
 /* ============================================================
-   5. TYPOGRAPHY
+   5. KLEUR UTILITY SYSTEEM
    ============================================================ */
 
-/* Font sizes */
-.text-xs   { font-size: var(--text-xs); }
-.text-sm   { font-size: var(--text-sm); }
-.text-base { font-size: var(--text-base); }
-.text-md   { font-size: var(--text-md); }
-.text-lg   { font-size: var(--text-lg); }
-.text-xl   { font-size: var(--text-xl); }
-.text-2xl  { font-size: var(--text-2xl); }
-.text-3xl  { font-size: var(--text-3xl); }
-.text-4xl  { font-size: var(--text-4xl); }
-.text-5xl  { font-size: var(--text-5xl); }
-
-/* Font weights */
-.font-regular  { font-weight: var(--weight-regular); }
-.font-medium   { font-weight: var(--weight-medium); }
-.font-semibold { font-weight: var(--weight-semibold); }
-.font-bold     { font-weight: var(--weight-bold); }
-
-/* Line heights */
-.leading-tight   { line-height: var(--leading-tight); }
-.leading-snug    { line-height: var(--leading-snug); }
-.leading-normal  { line-height: var(--leading-normal); }
-.leading-relaxed { line-height: var(--leading-relaxed); }
-
-/* Text alignment */
-.text-left   { text-align: left; }
-.text-center { text-align: center; }
-.text-right  { text-align: right; }
-
-/* Text transform */
-.uppercase   { text-transform: uppercase; }
-.lowercase   { text-transform: lowercase; }
-.capitalize  { text-transform: capitalize; }
-
-/* Letter spacing */
-.tracking-tight  { letter-spacing: -0.02em; }
-.tracking-normal { letter-spacing: 0; }
-.tracking-wide   { letter-spacing: 0.05em; }
-.tracking-wider  { letter-spacing: 0.1em; }
-
-/* Text color */
-.text-primary { color: var(--color-primary); }
-.text-muted   { color: var(--color-text-muted); }
-.text-white   { color: #ffffff; }
-.text-dark    { color: var(--color-text); }
+.text-color-primary  { color: var(--color-primary); }
+.text-color-light    { color: var(--color-text-light); }
+.text-color-inverse  { color: var(--color-text-inverse); }
+.text-color-success  { color: var(--color-success); }
+.text-color-warning  { color: var(--color-warning); }
+.text-color-error    { color: var(--color-error); }
 
 
 /* ============================================================
-   6. KLEUREN & ACHTERGRONDEN
+   6. ACHTERGROND UTILITY SYSTEEM
    ============================================================ */
 
-.bg-primary  { background-color: var(--color-primary); }
-.bg-secondary{ background-color: var(--color-secondary); }
-.bg-accent   { background-color: var(--color-accent); }
-.bg-white    { background-color: #ffffff; }
-.bg-light    { background-color: var(--color-bg-alt); }
-.bg-dark     { background-color: var(--color-text); }
-.bg-transparent { background-color: transparent; }
+.background-color-primary     { background-color: var(--color-primary); }
+.background-color-secondary   { background-color: var(--color-secondary); }
+.background-color-accent      { background-color: var(--color-accent); }
+.background-color-white       { background-color: #ffffff; }
+.background-color-light       { background-color: var(--color-bg-alt); }
+.background-color-dark        { background-color: var(--color-neutral-darkest); }
+.background-color-transparent { background-color: transparent; }
 
 
 /* ============================================================
-   7. FLEX LAYOUTS
+   7. LAYOUT UTILITY SYSTEEM
    ============================================================ */
 
-.flex         { display: flex; }
-.flex-col     { display: flex; flex-direction: column; }
-.flex-row     { display: flex; flex-direction: row; }
-.flex-wrap    { flex-wrap: wrap; }
-.flex-nowrap  { flex-wrap: nowrap; }
+.display-flex         { display: flex; }
+.display-grid         { display: grid; }
+.display-block        { display: block; }
+.display-inline-block { display: inline-block; }
+.display-none         { display: none; }
 
-.items-start  { align-items: flex-start; }
-.items-center { align-items: center; }
-.items-end    { align-items: flex-end; }
-.items-stretch{ align-items: stretch; }
+.flex-direction-row     { flex-direction: row; }
+.flex-direction-column  { flex-direction: column; }
+.flex-wrap              { flex-wrap: wrap; }
+.flex-wrap-none         { flex-wrap: nowrap; }
+
+.align-start    { align-items: flex-start; }
+.align-center   { align-items: center; }
+.align-end      { align-items: flex-end; }
+.align-stretch  { align-items: stretch; }
 
 .justify-start   { justify-content: flex-start; }
 .justify-center  { justify-content: center; }
 .justify-end     { justify-content: flex-end; }
 .justify-between { justify-content: space-between; }
-.justify-around  { justify-content: space-around; }
 
 .flex-1    { flex: 1; }
-.flex-auto { flex: auto; }
 .flex-none { flex: none; }
-
 .self-start  { align-self: flex-start; }
 .self-center { align-self: center; }
 .self-end    { align-self: flex-end; }
 
+.grid-cols-1  { grid-template-columns: repeat(1, 1fr); }
+.grid-cols-2  { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3  { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4  { grid-template-columns: repeat(4, 1fr); }
+.grid-cols-5  { grid-template-columns: repeat(5, 1fr); }
+.grid-cols-6  { grid-template-columns: repeat(6, 1fr); }
 
-/* ============================================================
-   8. GRID LAYOUTS
-   ============================================================ */
-
-.grid          { display: grid; }
-.grid-cols-1   { grid-template-columns: repeat(1, 1fr); }
-.grid-cols-2   { grid-template-columns: repeat(2, 1fr); }
-.grid-cols-3   { grid-template-columns: repeat(3, 1fr); }
-.grid-cols-4   { grid-template-columns: repeat(4, 1fr); }
-.grid-cols-5   { grid-template-columns: repeat(5, 1fr); }
-.grid-cols-6   { grid-template-columns: repeat(6, 1fr); }
-.grid-cols-12  { grid-template-columns: repeat(12, 1fr); }
-
-.col-span-1  { grid-column: span 1; }
-.col-span-2  { grid-column: span 2; }
-.col-span-3  { grid-column: span 3; }
-.col-span-4  { grid-column: span 4; }
-.col-span-6  { grid-column: span 6; }
-.col-span-12 { grid-column: span 12; }
-.col-span-full { grid-column: 1 / -1; }
+.span-1    { grid-column: span 1; }
+.span-2    { grid-column: span 2; }
+.span-3    { grid-column: span 3; }
+.span-4    { grid-column: span 4; }
+.span-full { grid-column: 1 / -1; }
 
 
 /* ============================================================
-   9. BUTTONS
+   8. SIZING UTILITY SYSTEEM
    ============================================================ */
 
-.btn {
+.width-full    { width: 100%; }
+.width-auto    { width: auto; }
+.height-full   { height: 100%; }
+.height-auto   { height: auto; }
+.height-screen { height: 100vh; }
+.min-height-screen { min-height: 100vh; }
+.max-width-full    { max-width: 100%; }
+
+
+/* ============================================================
+   9. VISIBILITY UTILITY SYSTEEM
+   ============================================================ */
+
+.hide       { display: none !important; }
+.invisible  { visibility: hidden; }
+.opacity-0  { opacity: 0; }
+.opacity-50 { opacity: 0.5; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* ============================================================
+   10. BORDER & RADIUS UTILITY SYSTEEM
+   ============================================================ */
+
+.border-all    { border: 1px solid var(--color-border); }
+.border-top    { border-top: 1px solid var(--color-border); }
+.border-bottom { border-bottom: 1px solid var(--color-border); }
+.border-none   { border: none; }
+
+.radius-small  { border-radius: var(--radius-small); }
+.radius-medium { border-radius: var(--radius-medium); }
+.radius-large  { border-radius: var(--radius-large); }
+.radius-xlarge { border-radius: var(--radius-xlarge); }
+.radius-full   { border-radius: var(--radius-full); }
+.radius-none   { border-radius: 0; }
+
+
+/* ============================================================
+   11. BUTTON SYSTEEM
+   Basis: .button-primary / .button-secondary / .button-text
+   Combo: voeg .is-small .is-large .is-full-width .is-white toe
+   ============================================================ */
+
+.button-primary,
+.button-secondary,
+.button-text {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -336,240 +469,318 @@
   font-size: var(--text-base);
   font-weight: var(--weight-medium);
   line-height: 1;
-  border-radius: var(--radius-md);
-  border: 2px solid transparent;
-  cursor: pointer;
   text-decoration: none;
-  transition: all var(--transition-base);
+  cursor: pointer;
+  transition: all var(--ease-base);
   white-space: nowrap;
+  border-radius: var(--radius-medium);
+  border: 2px solid transparent;
 }
 
-.btn-primary {
+.button-primary {
   background-color: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-text-inverse);
   border-color: var(--color-primary);
 }
-
-.btn-primary:hover {
+.button-primary:hover {
   background-color: var(--color-primary-hover);
   border-color: var(--color-primary-hover);
 }
 
-.btn-secondary {
+.button-secondary {
   background-color: transparent;
   color: var(--color-primary);
   border-color: var(--color-primary);
 }
-
-.btn-secondary:hover {
+.button-secondary:hover {
   background-color: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-text-inverse);
 }
 
-.btn-white {
-  background-color: #ffffff;
-  color: var(--color-primary);
-  border-color: #ffffff;
-}
-
-.btn-white:hover {
+.button-text {
   background-color: transparent;
-  color: #ffffff;
-  border-color: #ffffff;
+  color: var(--color-primary);
+  border-color: transparent;
+  padding-left: 0; padding-right: 0;
+  text-decoration: underline;
 }
+.button-text:hover { opacity: 0.7; }
 
-.btn-sm {
-  padding: var(--space-2) var(--space-4);
+/* Combo klassen */
+.button-primary.is-small,
+.button-secondary.is-small   { padding: var(--space-2) var(--space-4); font-size: var(--text-sm); }
+
+.button-primary.is-large,
+.button-secondary.is-large   { padding: var(--space-4) var(--space-8); font-size: var(--text-md); }
+
+.button-primary.is-full-width,
+.button-secondary.is-full-width { width: 100%; }
+
+.button-primary.is-white { background-color: #fff; color: var(--color-primary); border-color: #fff; }
+.button-primary.is-white:hover { background-color: transparent; color: #fff; }
+
+
+/* ============================================================
+   12. FORM UTILITY SYSTEEM
+   ============================================================ */
+
+.form-field-wrapper { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.form-label {
   font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
 }
 
-.btn-lg {
-  padding: var(--space-4) var(--space-8);
-  font-size: var(--text-md);
-}
-
-.btn-full {
+.form-input,
+.form-textarea,
+.form-select {
   width: 100%;
-  display: flex;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  transition: border-color var(--ease-fast);
+  appearance: none;
+}
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+.form-textarea { resize: vertical; min-height: 120px; }
+.form-error-message   { font-size: var(--text-sm); color: var(--color-error); }
+.form-success-message { font-size: var(--text-sm); color: var(--color-success); }
+
+
+/* ============================================================
+   13. POSITIE UTILITY SYSTEEM
+   ============================================================ */
+
+.overflow-hidden  { overflow: hidden; }
+.overflow-auto    { overflow: auto; }
+.overflow-x-hidden { overflow-x: hidden; }
+
+.position-relative { position: relative; }
+.position-absolute { position: absolute; }
+.position-fixed    { position: fixed; }
+.position-sticky   { position: sticky; }
+
+.z-index-1   { z-index: 1; }
+.z-index-10  { z-index: 10; }
+.z-index-20  { z-index: 20; }
+.z-index-50  { z-index: 50; }
+.z-index-100 { z-index: 100; }
+
+.absolute-fill { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+
+
+/* ============================================================
+   14. COMPONENT BASISKLASSEN
+   Gebruik met underscore naamgeving voor child elementen.
+   Combo klassen met is- prefix voor varianten.
+   ============================================================ */
+
+/* --- Kaart --- */
+.card {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  overflow: hidden;
+}
+.card_content { padding: var(--space-6); }
+.card_image   { width: 100%; display: block; }
+.card_label   { font-size: var(--text-sm); color: var(--color-text-light); }
+.card_title   { font-size: var(--text-xl); font-weight: var(--weight-bold); margin-top: var(--space-2); }
+.card_text    { font-size: var(--text-base); line-height: var(--leading-relaxed); margin-top: var(--space-3); }
+.card_footer  { padding: var(--space-4) var(--space-6); border-top: 1px solid var(--color-border); }
+
+/* --- Nav --- */
+.nav_wrapper { display: flex; align-items: center; justify-content: space-between; }
+.nav_logo    { display: flex; align-items: center; text-decoration: none; }
+.nav_menu    { display: flex; align-items: center; gap: var(--space-8); }
+.nav_link    { font-size: var(--text-base); text-decoration: none; color: var(--color-text); transition: opacity var(--ease-fast); }
+.nav_link:hover { opacity: 0.6; }
+.nav_cta     { display: flex; align-items: center; gap: var(--space-4); }
+
+/* --- Hero --- */
+.hero_component  { position: relative; }
+.hero_content    { position: relative; z-index: 1; }
+.hero_eyebrow    { font-size: var(--text-sm); font-weight: var(--weight-medium); letter-spacing: var(--tracking-wider); text-transform: uppercase; }
+.hero_title      { font-size: var(--text-5xl); font-weight: var(--weight-bold); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); }
+.hero_text       { font-size: var(--text-lg); line-height: var(--leading-relaxed); }
+.hero_buttons    { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+.hero_background { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; }
+
+/* --- Section header --- */
+.section-header          { display: flex; flex-direction: column; }
+.section-header_eyebrow  { font-size: var(--text-sm); font-weight: var(--weight-medium); letter-spacing: var(--tracking-wider); text-transform: uppercase; }
+.section-header_title    { font-size: var(--text-4xl); font-weight: var(--weight-bold); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); }
+.section-header_text     { font-size: var(--text-lg); line-height: var(--leading-relaxed); }
+
+/* --- Footer --- */
+.footer_component { border-top: 1px solid var(--color-border); }
+.footer_top       { display: flex; flex-wrap: wrap; gap: var(--space-12); }
+.footer_logo      { display: flex; align-items: center; text-decoration: none; }
+.footer_tagline   { font-size: var(--text-sm); color: var(--color-text-light); }
+.footer_nav-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-wide); text-transform: uppercase; }
+.footer_nav-list  { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.footer_nav-link  { font-size: var(--text-sm); color: var(--color-text-light); text-decoration: none; transition: color var(--ease-fast); }
+.footer_nav-link:hover { color: var(--color-text); }
+.footer_bottom    { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); border-top: 1px solid var(--color-border); }
+.footer_copyright { font-size: var(--text-sm); color: var(--color-text-light); }
+
+/* --- Testimonial --- */
+.testimonial_component { display: flex; flex-direction: column; gap: var(--space-4); }
+.testimonial_quote     { font-size: var(--text-lg); line-height: var(--leading-relaxed); }
+.testimonial_author    { display: flex; align-items: center; gap: var(--space-3); }
+.testimonial_image     { width: 3rem; height: 3rem; border-radius: var(--radius-full); object-fit: cover; }
+.testimonial_name      { font-weight: var(--weight-semibold); }
+.testimonial_role      { font-size: var(--text-sm); color: var(--color-text-light); }
+
+/* --- FAQ --- */
+.faq_component { border-top: 1px solid var(--color-border); }
+.faq_item      { border-bottom: 1px solid var(--color-border); }
+.faq_trigger   { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) 0; cursor: pointer; font-weight: var(--weight-medium); background: none; border: none; text-align: left; }
+.faq_answer    { padding-bottom: var(--space-5); font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--color-text-light); }
+
+/* --- Rich text (WordPress content blokken) --- */
+.rich-text h1, .rich-text h2, .rich-text h3,
+.rich-text h4, .rich-text h5, .rich-text h6 {
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-4);
+}
+.rich-text p            { line-height: var(--leading-relaxed); margin-bottom: var(--space-4); }
+.rich-text ul,
+.rich-text ol           { padding-left: var(--space-6); margin-bottom: var(--space-4); }
+.rich-text li           { line-height: var(--leading-relaxed); margin-bottom: var(--space-2); }
+.rich-text a            { color: var(--color-primary); text-decoration: underline; }
+.rich-text strong       { font-weight: var(--weight-bold); }
+.rich-text blockquote   {
+  border-left: 3px solid var(--color-primary);
+  padding-left: var(--space-6);
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--color-text-light);
+  margin: var(--space-8) 0;
 }
 
 
 /* ============================================================
-   10. DISPLAY & VISIBILITY
+   15. RESPONSIVE â€” BRICKS BREAKPOINTS
+   1200px Tablet landscape
+    992px Tablet portrait
+    768px Mobiel landscape
+    480px Mobiel portrait
    ============================================================ */
 
-.block        { display: block; }
-.inline-block { display: inline-block; }
-.inline       { display: inline; }
-.hidden       { display: none; }
-
-.w-full  { width: 100%; }
-.h-full  { height: 100%; }
-.w-auto  { width: auto; }
-.h-auto  { height: auto; }
-
-.min-h-screen { min-height: 100vh; }
-.min-h-full   { min-height: 100%; }
-
-.overflow-hidden { overflow: hidden; }
-.overflow-auto   { overflow: auto; }
-
-.relative { position: relative; }
-.absolute { position: absolute; }
-.fixed    { position: fixed; }
-.sticky   { position: sticky; }
-
-.z-0  { z-index: 0; }
-.z-10 { z-index: 10; }
-.z-20 { z-index: 20; }
-.z-50 { z-index: 50; }
-.z-100{ z-index: 100; }
-
-
-/* ============================================================
-   11. BORDERS
-   ============================================================ */
-
-.border        { border: 1px solid var(--color-border); }
-.border-top    { border-top: 1px solid var(--color-border); }
-.border-bottom { border-bottom: 1px solid var(--color-border); }
-.border-none   { border: none; }
-
-.rounded-sm   { border-radius: var(--radius-sm); }
-.rounded-md   { border-radius: var(--radius-md); }
-.rounded-lg   { border-radius: var(--radius-lg); }
-.rounded-xl   { border-radius: var(--radius-xl); }
-.rounded-full { border-radius: var(--radius-full); }
-
-
-/* ============================================================
-   12. SECTION HELPERS
-   ============================================================ */
-
-.section {
-  padding-top: var(--space-20);
-  padding-bottom: var(--space-20);
+@media (min-width: 992px) {
+  :root { --padding-global: 2.5rem; }
 }
 
-.section-sm {
-  padding-top: var(--space-12);
-  padding-bottom: var(--space-12);
-}
-
-.section-lg {
-  padding-top: var(--space-32);
-  padding-bottom: var(--space-32);
-}
-
-
-/* ============================================================
-   13. RESPONSIVE â€” BRICKS BREAKPOINTS
-   Bricks standaard: 1200 / 992 / 768 / 480
-   ============================================================ */
-
-/* Tablet landscape (max 1200px) */
 @media (max-width: 1200px) {
-  .container { padding-left: var(--space-6); padding-right: var(--space-6); }
-  .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
-  .grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
-  .section     { padding-top: var(--space-16); padding-bottom: var(--space-16); }
-  .section-lg  { padding-top: var(--space-24); padding-bottom: var(--space-24); }
+  .padding-section-large  { padding-top: var(--space-24); padding-bottom: var(--space-24); }
+  .grid-cols-4            { grid-template-columns: repeat(2, 1fr); }
+  .hero_title             { font-size: var(--text-4xl); }
+  .section-header_title   { font-size: var(--text-3xl); }
 }
 
-/* Tablet portrait (max 992px) */
 @media (max-width: 992px) {
-  .container { padding-left: var(--space-5); padding-right: var(--space-5); }
-  .grid-cols-3 { grid-template-columns: repeat(1, 1fr); }
-  .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
-  .section     { padding-top: var(--space-12); padding-bottom: var(--space-12); }
-  .section-lg  { padding-top: var(--space-20); padding-bottom: var(--space-20); }
-  .text-5xl    { font-size: var(--text-4xl); }
-  .text-4xl    { font-size: var(--text-3xl); }
+  .padding-section-medium { padding-top: var(--space-16); padding-bottom: var(--space-16); }
+  .padding-section-large  { padding-top: var(--space-20); padding-bottom: var(--space-20); }
+  .grid-cols-3            { grid-template-columns: repeat(2, 1fr); }
+  .hero_title             { font-size: var(--text-3xl); }
+  .nav_menu               { display: none; }
 }
 
-/* Mobile landscape (max 768px) */
 @media (max-width: 768px) {
-  .container { padding-left: var(--space-4); padding-right: var(--space-4); }
-  .grid-cols-2 { grid-template-columns: repeat(1, 1fr); }
-  .grid-cols-4 { grid-template-columns: repeat(1, 1fr); }
-  .section     { padding-top: var(--space-10); padding-bottom: var(--space-10); }
-  .section-lg  { padding-top: var(--space-16); padding-bottom: var(--space-16); }
-  .text-5xl    { font-size: var(--text-3xl); }
-  .text-4xl    { font-size: var(--text-2xl); }
-  .text-3xl    { font-size: var(--text-xl); }
-  .flex-col-mobile { flex-direction: column; }
-  .hidden-mobile   { display: none; }
-  .full-mobile     { width: 100%; }
-  .text-center-mobile { text-align: center; }
+  :root { --padding-global: 1rem; }
+  .padding-section-small  { padding-top: var(--space-8);  padding-bottom: var(--space-8); }
+  .padding-section-medium { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+  .padding-section-large  { padding-top: var(--space-16); padding-bottom: var(--space-16); }
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4            { grid-template-columns: repeat(1, 1fr); }
+  .hero_title             { font-size: var(--text-2xl); }
+  .hero_buttons           { flex-direction: column; align-items: stretch; }
+  .section-header_title   { font-size: var(--text-2xl); }
+  .footer_top             { flex-direction: column; }
+
+  .hide-mobile        { display: none !important; }
+  .show-mobile        { display: block !important; }
+  .full-width-mobile  { width: 100% !important; }
+  .text-center-mobile { text-align: center !important; }
+  .flex-column-mobile { flex-direction: column !important; }
 }
 
-/* Mobile portrait (max 480px) */
 @media (max-width: 480px) {
-  :root {
-    --text-5xl: 2.5rem;
-    --text-4xl: 2rem;
-    --text-3xl: 1.75rem;
-    --text-2xl: 1.5rem;
-  }
-  .container { padding-left: var(--space-4); padding-right: var(--space-4); }
-  .btn       { width: 100%; justify-content: center; }
-  .section   { padding-top: var(--space-8); padding-bottom: var(--space-8); }
+  .hero_title       { font-size: var(--text-xl); }
+  .button-primary,
+  .button-secondary { width: 100%; justify-content: center; }
+  .hide-tiny        { display: none !important; }
+}
+
+@media (min-width: 993px) {
+  .hide-desktop { display: none !important; }
 }
 
 
 /* ============================================================
-   14. UTILITY HELPERS
+   16. HELPER UTILITIES
    ============================================================ */
 
-.sr-only {
-  position: absolute;
-  width: 1px;
+.object-fit-cover    { object-fit: cover; }
+.object-fit-contain  { object-fit: contain; }
+.object-position-center { object-position: center; }
+.object-position-top    { object-position: top; }
+
+.ratio-square    { aspect-ratio: 1 / 1; }
+.ratio-landscape { aspect-ratio: 4 / 3; }
+.ratio-video     { aspect-ratio: 16 / 9; }
+.ratio-portrait  { aspect-ratio: 3 / 4; }
+
+.text-truncate   { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.text-no-wrap    { white-space: nowrap; }
+.text-wrap-balance { text-wrap: balance; }
+
+.cursor-pointer  { cursor: pointer; }
+.user-select-none { user-select: none; }
+
+.transition-fast { transition: all var(--ease-fast); }
+.transition-base { transition: all var(--ease-base); }
+.transition-slow { transition: all var(--ease-slow); }
+
+.shadow-small  { box-shadow: var(--shadow-small); }
+.shadow-medium { box-shadow: var(--shadow-medium); }
+.shadow-large  { box-shadow: var(--shadow-large); }
+.shadow-none   { box-shadow: none; }
+
+.divider {
+  width: 100%;
   height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+  background-color: var(--color-border);
 }
 
-.truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  background-color: var(--color-neutral-light);
+  color: var(--color-text);
 }
-
-.no-margin   { margin: 0 !important; }
-.no-padding  { padding: 0 !important; }
-.no-border   { border: none !important; }
-.no-radius   { border-radius: 0 !important; }
-
-.pointer     { cursor: pointer; }
-.select-none { user-select: none; }
-
-.ratio-16-9 {
-  aspect-ratio: 16 / 9;
-  width: 100%;
-  object-fit: cover;
-}
-
-.ratio-4-3 {
-  aspect-ratio: 4 / 3;
-  width: 100%;
-  object-fit: cover;
-}
-
-.ratio-1-1 {
-  aspect-ratio: 1 / 1;
-  width: 100%;
-  object-fit: cover;
-}
-
-.object-cover   { object-fit: cover; }
-.object-contain { object-fit: contain; }
-.object-center  { object-position: center; }
 
 /* ============================================================
-   END OF HAVESOME-T FRAMEWORK
-   Versie 1.0 â€” github.com/havesome-t/bricks-framework
+   EINDE â€” HAVESOME-T CLIENT-FIRST FRAMEWORK v2.0
+   github.com/havesome-t/bricks-framework
    ============================================================ */
