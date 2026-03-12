@@ -1,786 +1,666 @@
-/* ============================================================
-   HAVESOME-T â€” CLIENT-FIRST FRAMEWORK v2.0
-   Gebaseerd op Finsweet Client-First principes
-   Gebouwd voor Bricks Builder + WordPress + Webflow
-   github.com/havesome-t/bricks-framework
-
-   NAAMGEVING SYSTEEM
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   Custom classes  â†’ gebruiken underscore  â†’ hero_content
-   Utility classes â†’ geen underscore       â†’ text-size-large
-   Combo classes   â†’ prefix is-            â†’ is-white, is-large
-
-   CORE STRUCTURE VOLGORDE
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   page-wrapper
-   â””â”€â”€ main-wrapper
-       â””â”€â”€ section-[naam]
-           â””â”€â”€ padding-global
-               â””â”€â”€ container-large / container-medium / container-small
-                   â””â”€â”€ jouw content
-
-   INHOUDSOPGAVE
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   1.  CSS VARIABELEN
-   2.  CORE STRUCTURE
-   3.  SPACING UTILITY SYSTEEM
-   4.  TYPOGRAPHY UTILITY SYSTEEM
-   5.  KLEUR UTILITY SYSTEEM
-   6.  ACHTERGROND UTILITY SYSTEEM
-   7.  LAYOUT UTILITY SYSTEEM
-   8.  SIZING UTILITY SYSTEEM
-   9.  VISIBILITY UTILITY SYSTEEM
-   10. BORDER & RADIUS UTILITY SYSTEEM
-   11. BUTTON SYSTEEM
-   12. FORM UTILITY SYSTEEM
-   13. POSITIE UTILITY SYSTEEM
-   14. COMPONENT BASISKLASSEN
-   15. RESPONSIVE â€” BRICKS BREAKPOINTS
-   16. HELPER UTILITIES
-   ============================================================ */
-
-
-/* ============================================================
-   1. CSS VARIABELEN
-   Overschrijf per project in Bricks â†’ Theme Styles â†’ Custom CSS
-   ============================================================ */
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Havesome-t — Client-First Framework Stijlgids</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-
-  /* Kleuren â€” overschrijf per project */
-  --color-primary:          #000000;
-  --color-primary-hover:    #222222;
-  --color-secondary:        #ffffff;
-  --color-accent:           #000000;
-
-  /* Neutrale kleuren */
-  --color-neutral-lightest: #f8f8f8;
-  --color-neutral-light:    #f0f0f0;
-  --color-neutral-medium:   #d0d0d0;
-  --color-neutral-dark:     #6b6b6b;
-  --color-neutral-darkest:  #1a1a1a;
-
-  /* Semantische kleuren */
-  --color-text:             #1a1a1a;
-  --color-text-light:       #6b6b6b;
-  --color-text-inverse:     #ffffff;
-  --color-bg:               #ffffff;
-  --color-bg-alt:           #f5f5f5;
-  --color-border:           #e0e0e0;
-  --color-border-dark:      #c0c0c0;
-
-  /* Status */
-  --color-success:          #22c55e;
-  --color-warning:          #f59e0b;
-  --color-error:            #ef4444;
-
-  /* Spacing schaal rem â€” 1rem = 16px */
-  --space-0:    0;
-  --space-1:    0.25rem;
-  --space-2:    0.5rem;
-  --space-3:    0.75rem;
-  --space-4:    1rem;
-  --space-5:    1.25rem;
-  --space-6:    1.5rem;
-  --space-8:    2rem;
-  --space-10:   2.5rem;
-  --space-12:   3rem;
-  --space-16:   4rem;
-  --space-20:   5rem;
-  --space-24:   6rem;
-  --space-28:   7rem;
-  --space-32:   8rem;
-  --space-40:   10rem;
-
-  /* Typography schaal â€” rem, geen clamp */
-  --text-xs:    0.75rem;
-  --text-sm:    0.875rem;
-  --text-base:  1rem;
-  --text-md:    1.125rem;
-  --text-lg:    1.25rem;
-  --text-xl:    1.5rem;
-  --text-2xl:   2rem;
-  --text-3xl:   2.5rem;
-  --text-4xl:   3rem;
-  --text-5xl:   3.75rem;
-  --text-6xl:   4.5rem;
-
-  /* Line heights */
-  --leading-none:    1;
-  --leading-tight:   1.2;
-  --leading-snug:    1.35;
-  --leading-normal:  1.5;
-  --leading-relaxed: 1.7;
-  --leading-loose:   2;
-
-  /* Font weights */
-  --weight-light:    300;
-  --weight-regular:  400;
-  --weight-medium:   500;
-  --weight-semibold: 600;
-  --weight-bold:     700;
-  --weight-black:    900;
-
-  /* Letter spacing */
-  --tracking-tight:   -0.03em;
-  --tracking-snug:    -0.01em;
-  --tracking-normal:  0;
-  --tracking-wide:    0.05em;
-  --tracking-wider:   0.1em;
-  --tracking-widest:  0.15em;
-
-  /* Container breedtes */
-  --container-xsmall: 480px;
-  --container-small:  640px;
-  --container-medium: 860px;
-  --container-large:  1200px;
-  --container-xlarge: 1400px;
-
-  /* Globale padding links + rechts */
-  --padding-global: 1.25rem;
-
-  /* Border radius */
-  --radius-small:  4px;
-  --radius-medium: 8px;
-  --radius-large:  12px;
-  --radius-xlarge: 16px;
-  --radius-full:   9999px;
-
-  /* Transitions */
-  --ease-fast:   150ms ease;
-  --ease-base:   250ms ease;
-  --ease-slow:   400ms ease;
-  --ease-slower: 600ms ease;
-
-  /* Shadows */
-  --shadow-small:  0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
-  --shadow-medium: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
-  --shadow-large:  0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06);
+  --sidebar: 240px;
+  --bg: #f7f6f3;
+  --surface: #ffffff;
+  --dark: #0d0d0d;
+  --dark-2: #1a1a1a;
+  --dark-3: #2a2a2a;
+  --muted: #888;
+  --border: #e5e5e5;
+  --accent: #0d0d0d;
+  --blue: #0066cc;
+  --blue-bg: #e8f0fe;
+  --font-sans: 'Syne', sans-serif;
+  --font-mono: 'DM Mono', monospace;
 }
 
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); background: var(--bg); color: var(--dark); display: flex; min-height: 100vh; }
 
-/* ============================================================
-   2. CORE STRUCTURE
-   De vaste lagenstructuur â€” gebruik altijd in deze volgorde.
-   ============================================================ */
-
-/* Laag 1 â€” omsluit de hele pagina */
-.page-wrapper {
-  overflow: hidden;
-  position: relative;
+/* ── SIDEBAR ── */
+.sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--sidebar); height: 100vh;
+  background: var(--dark); color: #fff;
+  display: flex; flex-direction: column;
+  padding: 2rem 1.5rem;
+  overflow-y: auto; z-index: 100;
 }
+.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar-thumb { background: #333; }
 
-/* Laag 2 â€” main content exclusief nav en footer */
-.main-wrapper {
-  /* Geen standaard stijlen â€” alleen semantisch */
+.logo { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+.logo-sub { font-family: var(--font-mono); font-size: 0.6rem; color: #444; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.25rem; padding-bottom: 1.5rem; border-bottom: 1px solid #222; margin-bottom: 1.5rem; }
+
+.nav-group { margin-bottom: 1.5rem; }
+.nav-group-label { font-family: var(--font-mono); font-size: 0.58rem; color: #444; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.5rem; padding-left: 0.5rem; }
+.nav-group a { display: block; font-family: var(--font-mono); font-size: 0.68rem; color: #777; text-decoration: none; padding: 0.3rem 0.5rem; border-radius: 4px; transition: all 200ms; }
+.nav-group a:hover { color: #fff; background: #1e1e1e; }
+
+.sidebar-footer { margin-top: auto; font-family: var(--font-mono); font-size: 0.58rem; color: #333; line-height: 1.8; }
+
+/* ── MAIN ── */
+.main { margin-left: var(--sidebar); flex: 1; padding: 3rem; max-width: 1000px; }
+
+/* ── HERO BANNER ── */
+.banner {
+  background: var(--dark); color: #fff;
+  border-radius: 16px; padding: 3rem;
+  margin-bottom: 3rem; position: relative; overflow: hidden;
 }
-
-/* Laag 3 â€” secties organiseren de pagina in blokken */
-/* Geef altijd een beschrijvende naam: section-hero, section-diensten, section-contact */
-/* De section zelf krijgt GEEN padding â€” dat doet padding-global */
-[class*="section-"] {
-  position: relative;
-  width: 100%;
+.banner::after {
+  content: 'CF'; position: absolute;
+  right: 2rem; bottom: -1rem;
+  font-size: 8rem; font-weight: 800;
+  color: rgba(255,255,255,0.04);
+  letter-spacing: -0.05em;
+  line-height: 1; pointer-events: none;
 }
+.banner-tag { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: #555; margin-bottom: 1rem; }
+.banner h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1rem; }
+.banner p { font-family: var(--font-mono); font-size: 0.8rem; color: #666; max-width: 520px; line-height: 1.8; }
+.banner-url { display: inline-block; margin-top: 1.25rem; font-family: var(--font-mono); font-size: 0.65rem; color: #555; background: #1a1a1a; padding: 0.4rem 0.75rem; border-radius: 4px; letter-spacing: 0.04em; }
 
-/* Laag 4 â€” globale horizontale padding */
-/* ALLEEN padding-left en padding-right â€” nooit verticale spacing hier */
-.padding-global {
-  padding-left:  var(--padding-global);
-  padding-right: var(--padding-global);
+/* ── SECTIE ── */
+.sg-section { margin-bottom: 4rem; scroll-margin-top: 2rem; }
+.sg-section-head { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+.sg-section-title { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; }
+.sg-section-tag { font-family: var(--font-mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* ── KAART ── */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
+.card-label { font-family: var(--font-mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+
+/* ── STRUCTURE DIAGRAM ── */
+.structure { display: flex; flex-direction: column; gap: 0; }
+.layer {
+  border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 0.75rem 1rem; margin: 0.25rem 0;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface);
 }
+.layer.is-core { border-color: var(--dark); background: var(--dark); color: #fff; }
+.layer.is-primary { border-color: #555; background: #111; color: #fff; }
+.layer.is-secondary { border-color: #999; background: #f8f8f8; }
+.layer-indent-1 { margin-left: 1.5rem; }
+.layer-indent-2 { margin-left: 3rem; }
+.layer-indent-3 { margin-left: 4.5rem; }
+.layer-indent-4 { margin-left: 6rem; }
+.layer-indent-5 { margin-left: 7.5rem; }
+.layer-name { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; }
+.layer-desc { font-family: var(--font-mono); font-size: 0.62rem; opacity: 0.5; }
 
-/* Laag 5 â€” verticale sectie spacing */
-.padding-section-small  { padding-top: var(--space-12); padding-bottom: var(--space-12); }
-.padding-section-medium { padding-top: var(--space-20); padding-bottom: var(--space-20); }
-.padding-section-large  { padding-top: var(--space-32); padding-bottom: var(--space-32); }
+/* ── CLASS PILL ── */
+.pill { display: inline-flex; font-family: var(--font-mono); font-size: 0.65rem; background: var(--blue-bg); color: var(--blue); padding: 2px 8px; border-radius: 4px; }
+.pill.is-dark { background: #111; color: #aaa; }
+.pill.is-green { background: #e6f7ed; color: #16a34a; }
 
-/* Laag 6 â€” container centreert content met een max-width */
-.container-xsmall,
-.container-small,
-.container-medium,
-.container-large,
-.container-xlarge {
-  margin-left:  auto;
-  margin-right: auto;
-  width: 100%;
+/* ── KLEUR GRID ── */
+.color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.75rem; }
+.swatch { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.swatch-preview { height: 64px; }
+.swatch-info { padding: 0.6rem; background: #fff; }
+.swatch-name { font-family: var(--font-mono); font-size: 0.6rem; font-weight: 500; display: block; }
+.swatch-val  { font-family: var(--font-mono); font-size: 0.56rem; color: var(--muted); display: block; margin-top: 1px; }
+
+/* ── TYPE SCALE ── */
+.type-row { display: flex; align-items: baseline; gap: 1.5rem; padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; }
+.type-row:last-child { border: none; }
+.type-meta { width: 140px; flex-shrink: 0; text-align: right; display: flex; flex-direction: column; gap: 3px; }
+.type-sample { flex: 1; }
+
+/* ── SPACING ── */
+.space-rows { display: flex; flex-direction: column; gap: 0.6rem; }
+.space-row { display: flex; align-items: center; gap: 1rem; }
+.space-bar  { height: 20px; background: var(--dark); border-radius: 3px; min-width: 2px; }
+.space-label { width: 110px; flex-shrink: 0; }
+.space-val   { font-family: var(--font-mono); font-size: 0.6rem; color: var(--muted); width: 80px; flex-shrink: 0; }
+
+/* ── BUTTONS ── */
+.btn-demo { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+.btn-primary, .btn-secondary, .btn-text {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0.75rem 1.5rem; font-family: var(--font-sans);
+  font-size: 1rem; font-weight: 500; line-height: 1;
+  text-decoration: none; cursor: pointer;
+  transition: all 250ms ease;
+  white-space: nowrap; border-radius: 8px; border: 2px solid transparent;
 }
-.container-xsmall { max-width: var(--container-xsmall); }
-.container-small  { max-width: var(--container-small); }
-.container-medium { max-width: var(--container-medium); }
-.container-large  { max-width: var(--container-large); }
-.container-xlarge { max-width: var(--container-xlarge); }
-
-
-/* ============================================================
-   3. SPACING UTILITY SYSTEEM
-   ============================================================ */
-
-.padding-0   { padding: 0; }
-.padding-4   { padding: var(--space-4); }
-.padding-6   { padding: var(--space-6); }
-.padding-8   { padding: var(--space-8); }
-.padding-12  { padding: var(--space-12); }
-.padding-16  { padding: var(--space-16); }
-
-.padding-horizontal-4   { padding-left: var(--space-4);  padding-right: var(--space-4); }
-.padding-horizontal-6   { padding-left: var(--space-6);  padding-right: var(--space-6); }
-.padding-horizontal-8   { padding-left: var(--space-8);  padding-right: var(--space-8); }
-.padding-horizontal-12  { padding-left: var(--space-12); padding-right: var(--space-12); }
-.padding-horizontal-16  { padding-left: var(--space-16); padding-right: var(--space-16); }
-
-.padding-vertical-4   { padding-top: var(--space-4);  padding-bottom: var(--space-4); }
-.padding-vertical-6   { padding-top: var(--space-6);  padding-bottom: var(--space-6); }
-.padding-vertical-8   { padding-top: var(--space-8);  padding-bottom: var(--space-8); }
-.padding-vertical-12  { padding-top: var(--space-12); padding-bottom: var(--space-12); }
-.padding-vertical-16  { padding-top: var(--space-16); padding-bottom: var(--space-16); }
-.padding-vertical-20  { padding-top: var(--space-20); padding-bottom: var(--space-20); }
-.padding-vertical-24  { padding-top: var(--space-24); padding-bottom: var(--space-24); }
-.padding-vertical-32  { padding-top: var(--space-32); padding-bottom: var(--space-32); }
-
-.padding-top-0   { padding-top: 0; }
-.padding-top-4   { padding-top: var(--space-4); }
-.padding-top-6   { padding-top: var(--space-6); }
-.padding-top-8   { padding-top: var(--space-8); }
-.padding-top-12  { padding-top: var(--space-12); }
-.padding-top-16  { padding-top: var(--space-16); }
-.padding-top-20  { padding-top: var(--space-20); }
-.padding-top-24  { padding-top: var(--space-24); }
-
-.padding-bottom-0   { padding-bottom: 0; }
-.padding-bottom-4   { padding-bottom: var(--space-4); }
-.padding-bottom-6   { padding-bottom: var(--space-6); }
-.padding-bottom-8   { padding-bottom: var(--space-8); }
-.padding-bottom-12  { padding-bottom: var(--space-12); }
-.padding-bottom-16  { padding-bottom: var(--space-16); }
-.padding-bottom-20  { padding-bottom: var(--space-20); }
-.padding-bottom-24  { padding-bottom: var(--space-24); }
-
-.margin-auto            { margin: auto; }
-.margin-horizontal-auto { margin-left: auto; margin-right: auto; }
-.margin-0               { margin: 0; }
-
-.margin-top-0   { margin-top: 0; }
-.margin-top-2   { margin-top: var(--space-2); }
-.margin-top-4   { margin-top: var(--space-4); }
-.margin-top-6   { margin-top: var(--space-6); }
-.margin-top-8   { margin-top: var(--space-8); }
-.margin-top-12  { margin-top: var(--space-12); }
-.margin-top-16  { margin-top: var(--space-16); }
-.margin-top-20  { margin-top: var(--space-20); }
-
-.margin-bottom-0   { margin-bottom: 0; }
-.margin-bottom-2   { margin-bottom: var(--space-2); }
-.margin-bottom-4   { margin-bottom: var(--space-4); }
-.margin-bottom-6   { margin-bottom: var(--space-6); }
-.margin-bottom-8   { margin-bottom: var(--space-8); }
-.margin-bottom-12  { margin-bottom: var(--space-12); }
-.margin-bottom-16  { margin-bottom: var(--space-16); }
-.margin-bottom-20  { margin-bottom: var(--space-20); }
-
-.gap-0   { gap: 0; }
-.gap-2   { gap: var(--space-2); }
-.gap-4   { gap: var(--space-4); }
-.gap-6   { gap: var(--space-6); }
-.gap-8   { gap: var(--space-8); }
-.gap-10  { gap: var(--space-10); }
-.gap-12  { gap: var(--space-12); }
-.gap-16  { gap: var(--space-16); }
-.gap-20  { gap: var(--space-20); }
-
-
-/* ============================================================
-   4. TYPOGRAPHY UTILITY SYSTEEM
-   ============================================================ */
-
-.text-size-xsmall  { font-size: var(--text-xs); }
-.text-size-small   { font-size: var(--text-sm); }
-.text-size-regular { font-size: var(--text-base); }
-.text-size-medium  { font-size: var(--text-md); }
-.text-size-large   { font-size: var(--text-lg); }
-.text-size-xlarge  { font-size: var(--text-xl); }
-.text-size-2xlarge { font-size: var(--text-2xl); }
-.text-size-3xlarge { font-size: var(--text-3xl); }
-.text-size-4xlarge { font-size: var(--text-4xl); }
-.text-size-5xlarge { font-size: var(--text-5xl); }
-.text-size-6xlarge { font-size: var(--text-6xl); }
-
-.text-weight-light    { font-weight: var(--weight-light); }
-.text-weight-regular  { font-weight: var(--weight-regular); }
-.text-weight-medium   { font-weight: var(--weight-medium); }
-.text-weight-semibold { font-weight: var(--weight-semibold); }
-.text-weight-bold     { font-weight: var(--weight-bold); }
-.text-weight-black    { font-weight: var(--weight-black); }
-
-.text-height-tight    { line-height: var(--leading-tight); }
-.text-height-snug     { line-height: var(--leading-snug); }
-.text-height-normal   { line-height: var(--leading-normal); }
-.text-height-relaxed  { line-height: var(--leading-relaxed); }
-.text-height-loose    { line-height: var(--leading-loose); }
-
-.text-spacing-tight   { letter-spacing: var(--tracking-tight); }
-.text-spacing-normal  { letter-spacing: var(--tracking-normal); }
-.text-spacing-wide    { letter-spacing: var(--tracking-wide); }
-.text-spacing-wider   { letter-spacing: var(--tracking-wider); }
-.text-spacing-widest  { letter-spacing: var(--tracking-widest); }
-
-.text-align-left    { text-align: left; }
-.text-align-center  { text-align: center; }
-.text-align-right   { text-align: right; }
-
-.text-transform-uppercase  { text-transform: uppercase; }
-.text-transform-none       { text-transform: none; }
-.text-style-italic         { font-style: italic; }
-
-
-/* ============================================================
-   5. KLEUR UTILITY SYSTEEM
-   ============================================================ */
-
-.text-color-primary  { color: var(--color-primary); }
-.text-color-light    { color: var(--color-text-light); }
-.text-color-inverse  { color: var(--color-text-inverse); }
-.text-color-success  { color: var(--color-success); }
-.text-color-warning  { color: var(--color-warning); }
-.text-color-error    { color: var(--color-error); }
-
-
-/* ============================================================
-   6. ACHTERGROND UTILITY SYSTEEM
-   ============================================================ */
-
-.background-color-primary     { background-color: var(--color-primary); }
-.background-color-secondary   { background-color: var(--color-secondary); }
-.background-color-accent      { background-color: var(--color-accent); }
-.background-color-white       { background-color: #ffffff; }
-.background-color-light       { background-color: var(--color-bg-alt); }
-.background-color-dark        { background-color: var(--color-neutral-darkest); }
-.background-color-transparent { background-color: transparent; }
-
-
-/* ============================================================
-   7. LAYOUT UTILITY SYSTEEM
-   ============================================================ */
-
-.display-flex         { display: flex; }
-.display-grid         { display: grid; }
-.display-block        { display: block; }
-.display-inline-block { display: inline-block; }
-.display-none         { display: none; }
-
-.flex-direction-row     { flex-direction: row; }
-.flex-direction-column  { flex-direction: column; }
-.flex-wrap              { flex-wrap: wrap; }
-.flex-wrap-none         { flex-wrap: nowrap; }
-
-.align-start    { align-items: flex-start; }
-.align-center   { align-items: center; }
-.align-end      { align-items: flex-end; }
-.align-stretch  { align-items: stretch; }
-
-.justify-start   { justify-content: flex-start; }
-.justify-center  { justify-content: center; }
-.justify-end     { justify-content: flex-end; }
-.justify-between { justify-content: space-between; }
-
-.flex-1    { flex: 1; }
-.flex-none { flex: none; }
-.self-start  { align-self: flex-start; }
-.self-center { align-self: center; }
-.self-end    { align-self: flex-end; }
-
-.grid-cols-1  { grid-template-columns: repeat(1, 1fr); }
-.grid-cols-2  { grid-template-columns: repeat(2, 1fr); }
-.grid-cols-3  { grid-template-columns: repeat(3, 1fr); }
-.grid-cols-4  { grid-template-columns: repeat(4, 1fr); }
-.grid-cols-5  { grid-template-columns: repeat(5, 1fr); }
-.grid-cols-6  { grid-template-columns: repeat(6, 1fr); }
-
-.span-1    { grid-column: span 1; }
-.span-2    { grid-column: span 2; }
-.span-3    { grid-column: span 3; }
-.span-4    { grid-column: span 4; }
-.span-full { grid-column: 1 / -1; }
-
-
-/* ============================================================
-   8. SIZING UTILITY SYSTEEM
-   ============================================================ */
-
-.width-full    { width: 100%; }
-.width-auto    { width: auto; }
-.height-full   { height: 100%; }
-.height-auto   { height: auto; }
-.height-screen { height: 100vh; }
-.min-height-screen { min-height: 100vh; }
-.max-width-full    { max-width: 100%; }
-
-
-/* ============================================================
-   9. VISIBILITY UTILITY SYSTEEM
-   ============================================================ */
-
-.hide       { display: none !important; }
-.invisible  { visibility: hidden; }
-.opacity-0  { opacity: 0; }
-.opacity-50 { opacity: 0.5; }
-
-.visually-hidden {
-  position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-
-/* ============================================================
-   10. BORDER & RADIUS UTILITY SYSTEEM
-   ============================================================ */
-
-.border-all    { border: 1px solid var(--color-border); }
-.border-top    { border-top: 1px solid var(--color-border); }
-.border-bottom { border-bottom: 1px solid var(--color-border); }
-.border-none   { border: none; }
-
-.radius-small  { border-radius: var(--radius-small); }
-.radius-medium { border-radius: var(--radius-medium); }
-.radius-large  { border-radius: var(--radius-large); }
-.radius-xlarge { border-radius: var(--radius-xlarge); }
-.radius-full   { border-radius: var(--radius-full); }
-.radius-none   { border-radius: 0; }
-
-
-/* ============================================================
-   11. BUTTON SYSTEEM
-   Basis: .button-primary / .button-secondary / .button-text
-   Combo: voeg .is-small .is-large .is-full-width .is-white toe
-   ============================================================ */
-
-.button-primary,
-.button-secondary,
-.button-text {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-3) var(--space-6);
-  font-size: var(--text-base);
-  font-weight: var(--weight-medium);
-  line-height: 1;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all var(--ease-base);
-  white-space: nowrap;
-  border-radius: var(--radius-medium);
-  border: 2px solid transparent;
-}
-
-.button-primary {
-  background-color: var(--color-primary);
-  color: var(--color-text-inverse);
-  border-color: var(--color-primary);
-}
-.button-primary:hover {
-  background-color: var(--color-primary-hover);
-  border-color: var(--color-primary-hover);
-}
-
-.button-secondary {
-  background-color: transparent;
-  color: var(--color-primary);
-  border-color: var(--color-primary);
-}
-.button-secondary:hover {
-  background-color: var(--color-primary);
-  color: var(--color-text-inverse);
-}
-
-.button-text {
-  background-color: transparent;
-  color: var(--color-primary);
-  border-color: transparent;
-  padding-left: 0; padding-right: 0;
-  text-decoration: underline;
-}
-.button-text:hover { opacity: 0.7; }
-
-/* Combo klassen */
-.button-primary.is-small,
-.button-secondary.is-small   { padding: var(--space-2) var(--space-4); font-size: var(--text-sm); }
-
-.button-primary.is-large,
-.button-secondary.is-large   { padding: var(--space-4) var(--space-8); font-size: var(--text-md); }
-
-.button-primary.is-full-width,
-.button-secondary.is-full-width { width: 100%; }
-
-.button-primary.is-white { background-color: #fff; color: var(--color-primary); border-color: #fff; }
-.button-primary.is-white:hover { background-color: transparent; color: #fff; }
-
-
-/* ============================================================
-   12. FORM UTILITY SYSTEEM
-   ============================================================ */
-
-.form-field-wrapper { display: flex; flex-direction: column; gap: var(--space-2); }
-
-.form-label {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  color: var(--color-text);
-}
-
-.form-input,
-.form-textarea,
-.form-select {
-  width: 100%;
-  padding: var(--space-3) var(--space-4);
-  font-size: var(--text-base);
-  color: var(--color-text);
-  background-color: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-medium);
-  transition: border-color var(--ease-fast);
-  appearance: none;
-}
-.form-input:focus,
-.form-textarea:focus,
-.form-select:focus {
-  outline: none;
-  border-color: var(--color-primary);
-}
-.form-textarea { resize: vertical; min-height: 120px; }
-.form-error-message   { font-size: var(--text-sm); color: var(--color-error); }
-.form-success-message { font-size: var(--text-sm); color: var(--color-success); }
-
-
-/* ============================================================
-   13. POSITIE UTILITY SYSTEEM
-   ============================================================ */
-
-.overflow-hidden  { overflow: hidden; }
-.overflow-auto    { overflow: auto; }
-.overflow-x-hidden { overflow-x: hidden; }
-
-.position-relative { position: relative; }
-.position-absolute { position: absolute; }
-.position-fixed    { position: fixed; }
-.position-sticky   { position: sticky; }
-
-.z-index-1   { z-index: 1; }
-.z-index-10  { z-index: 10; }
-.z-index-20  { z-index: 20; }
-.z-index-50  { z-index: 50; }
-.z-index-100 { z-index: 100; }
-
-.absolute-fill { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
-
-
-/* ============================================================
-   14. COMPONENT BASISKLASSEN
-   Gebruik met underscore naamgeving voor child elementen.
-   Combo klassen met is- prefix voor varianten.
-   ============================================================ */
-
-/* --- Kaart --- */
-.card {
-  background-color: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-large);
-  overflow: hidden;
-}
-.card_content { padding: var(--space-6); }
-.card_image   { width: 100%; display: block; }
-.card_label   { font-size: var(--text-sm); color: var(--color-text-light); }
-.card_title   { font-size: var(--text-xl); font-weight: var(--weight-bold); margin-top: var(--space-2); }
-.card_text    { font-size: var(--text-base); line-height: var(--leading-relaxed); margin-top: var(--space-3); }
-.card_footer  { padding: var(--space-4) var(--space-6); border-top: 1px solid var(--color-border); }
-
-/* --- Nav --- */
-.nav_wrapper { display: flex; align-items: center; justify-content: space-between; }
-.nav_logo    { display: flex; align-items: center; text-decoration: none; }
-.nav_menu    { display: flex; align-items: center; gap: var(--space-8); }
-.nav_link    { font-size: var(--text-base); text-decoration: none; color: var(--color-text); transition: opacity var(--ease-fast); }
-.nav_link:hover { opacity: 0.6; }
-.nav_cta     { display: flex; align-items: center; gap: var(--space-4); }
-
-/* --- Hero --- */
-.hero_component  { position: relative; }
-.hero_content    { position: relative; z-index: 1; }
-.hero_eyebrow    { font-size: var(--text-sm); font-weight: var(--weight-medium); letter-spacing: var(--tracking-wider); text-transform: uppercase; }
-.hero_title      { font-size: var(--text-5xl); font-weight: var(--weight-bold); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); }
-.hero_text       { font-size: var(--text-lg); line-height: var(--leading-relaxed); }
-.hero_buttons    { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
-.hero_background { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; }
-
-/* --- Section header --- */
-.section-header          { display: flex; flex-direction: column; }
-.section-header_eyebrow  { font-size: var(--text-sm); font-weight: var(--weight-medium); letter-spacing: var(--tracking-wider); text-transform: uppercase; }
-.section-header_title    { font-size: var(--text-4xl); font-weight: var(--weight-bold); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); }
-.section-header_text     { font-size: var(--text-lg); line-height: var(--leading-relaxed); }
-
-/* --- Footer --- */
-.footer_component { border-top: 1px solid var(--color-border); }
-.footer_top       { display: flex; flex-wrap: wrap; gap: var(--space-12); }
-.footer_logo      { display: flex; align-items: center; text-decoration: none; }
-.footer_tagline   { font-size: var(--text-sm); color: var(--color-text-light); }
-.footer_nav-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-wide); text-transform: uppercase; }
-.footer_nav-list  { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
-.footer_nav-link  { font-size: var(--text-sm); color: var(--color-text-light); text-decoration: none; transition: color var(--ease-fast); }
-.footer_nav-link:hover { color: var(--color-text); }
-.footer_bottom    { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); border-top: 1px solid var(--color-border); }
-.footer_copyright { font-size: var(--text-sm); color: var(--color-text-light); }
-
-/* --- Testimonial --- */
-.testimonial_component { display: flex; flex-direction: column; gap: var(--space-4); }
-.testimonial_quote     { font-size: var(--text-lg); line-height: var(--leading-relaxed); }
-.testimonial_author    { display: flex; align-items: center; gap: var(--space-3); }
-.testimonial_image     { width: 3rem; height: 3rem; border-radius: var(--radius-full); object-fit: cover; }
-.testimonial_name      { font-weight: var(--weight-semibold); }
-.testimonial_role      { font-size: var(--text-sm); color: var(--color-text-light); }
-
-/* --- FAQ --- */
-.faq_component { border-top: 1px solid var(--color-border); }
-.faq_item      { border-bottom: 1px solid var(--color-border); }
-.faq_trigger   { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: var(--space-5) 0; cursor: pointer; font-weight: var(--weight-medium); background: none; border: none; text-align: left; }
-.faq_answer    { padding-bottom: var(--space-5); font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--color-text-light); }
-
-/* --- Rich text (WordPress content blokken) --- */
-.rich-text h1, .rich-text h2, .rich-text h3,
-.rich-text h4, .rich-text h5, .rich-text h6 {
-  font-weight: var(--weight-bold);
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
-  margin-top: var(--space-8);
-  margin-bottom: var(--space-4);
-}
-.rich-text p            { line-height: var(--leading-relaxed); margin-bottom: var(--space-4); }
-.rich-text ul,
-.rich-text ol           { padding-left: var(--space-6); margin-bottom: var(--space-4); }
-.rich-text li           { line-height: var(--leading-relaxed); margin-bottom: var(--space-2); }
-.rich-text a            { color: var(--color-primary); text-decoration: underline; }
-.rich-text strong       { font-weight: var(--weight-bold); }
-.rich-text blockquote   {
-  border-left: 3px solid var(--color-primary);
-  padding-left: var(--space-6);
-  font-size: var(--text-lg);
-  font-style: italic;
-  color: var(--color-text-light);
-  margin: var(--space-8) 0;
-}
-
-
-/* ============================================================
-   15. RESPONSIVE â€” BRICKS BREAKPOINTS
-   1200px Tablet landscape
-    992px Tablet portrait
-    768px Mobiel landscape
-    480px Mobiel portrait
-   ============================================================ */
-
-@media (min-width: 992px) {
-  :root { --padding-global: 2.5rem; }
-}
-
-@media (max-width: 1200px) {
-  .padding-section-large  { padding-top: var(--space-24); padding-bottom: var(--space-24); }
-  .grid-cols-4            { grid-template-columns: repeat(2, 1fr); }
-  .hero_title             { font-size: var(--text-4xl); }
-  .section-header_title   { font-size: var(--text-3xl); }
-}
-
-@media (max-width: 992px) {
-  .padding-section-medium { padding-top: var(--space-16); padding-bottom: var(--space-16); }
-  .padding-section-large  { padding-top: var(--space-20); padding-bottom: var(--space-20); }
-  .grid-cols-3            { grid-template-columns: repeat(2, 1fr); }
-  .hero_title             { font-size: var(--text-3xl); }
-  .nav_menu               { display: none; }
-}
+.btn-primary  { background: #000; color: #fff; border-color: #000; }
+.btn-primary:hover { background: #333; border-color: #333; }
+.btn-secondary { background: transparent; color: #000; border-color: #000; }
+.btn-secondary:hover { background: #000; color: #fff; }
+.btn-text { background: transparent; color: #000; border: none; padding-left: 0; text-decoration: underline; }
+.is-small { padding: 0.5rem 1rem; font-size: 0.875rem; }
+.is-large { padding: 1rem 2rem; font-size: 1.125rem; }
+
+/* ── NAMING SYSTEEM ── */
+.naming-row { display: flex; align-items: flex-start; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid #f5f5f5; }
+.naming-type { width: 100px; flex-shrink: 0; font-family: var(--font-mono); font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.naming-example { font-family: var(--font-mono); font-size: 0.75rem; color: var(--dark); }
+.naming-desc { font-family: var(--font-mono); font-size: 0.62rem; color: var(--muted); margin-top: 3px; }
+
+/* ── COMPONENT STRUCTUUR ── */
+.comp-tree { font-family: var(--font-mono); font-size: 0.72rem; line-height: 2; background: #0d0d0d; color: #ccc; padding: 1.25rem 1.5rem; border-radius: 8px; overflow-x: auto; }
+.comp-tree .tag { color: #7dd3fc; }
+.comp-tree .class { color: #86efac; }
+.comp-tree .comment { color: #555; }
 
 @media (max-width: 768px) {
-  :root { --padding-global: 1rem; }
-  .padding-section-small  { padding-top: var(--space-8);  padding-bottom: var(--space-8); }
-  .padding-section-medium { padding-top: var(--space-12); padding-bottom: var(--space-12); }
-  .padding-section-large  { padding-top: var(--space-16); padding-bottom: var(--space-16); }
-  .grid-cols-2,
-  .grid-cols-3,
-  .grid-cols-4            { grid-template-columns: repeat(1, 1fr); }
-  .hero_title             { font-size: var(--text-2xl); }
-  .hero_buttons           { flex-direction: column; align-items: stretch; }
-  .section-header_title   { font-size: var(--text-2xl); }
-  .footer_top             { flex-direction: column; }
-
-  .hide-mobile        { display: none !important; }
-  .show-mobile        { display: block !important; }
-  .full-width-mobile  { width: 100% !important; }
-  .text-center-mobile { text-align: center !important; }
-  .flex-column-mobile { flex-direction: column !important; }
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 1.5rem; }
 }
+</style>
+</head>
+<body>
 
-@media (max-width: 480px) {
-  .hero_title       { font-size: var(--text-xl); }
-  .button-primary,
-  .button-secondary { width: 100%; justify-content: center; }
-  .hide-tiny        { display: none !important; }
-}
+<aside class="sidebar">
+  <div class="logo">Havesome-t</div>
+  <div class="logo-sub">Client-First v2.0</div>
 
-@media (min-width: 993px) {
-  .hide-desktop { display: none !important; }
-}
+  <nav>
+    <div class="nav-group">
+      <div class="nav-group-label">Fundament</div>
+      <a href="#naamgeving">Naamgeving systeem</a>
+      <a href="#structure">Core Structure</a>
+      <a href="#kleuren">Kleuren</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Tokens</div>
+      <a href="#typography">Typography</a>
+      <a href="#spacing">Spacing</a>
+      <a href="#radius">Radius & Shadows</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Componenten</div>
+      <a href="#buttons">Buttons</a>
+      <a href="#forms">Forms</a>
+      <a href="#components">Component classes</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Referentie</div>
+      <a href="#responsive">Responsive</a>
+      <a href="#utilities">Alle utilities</a>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    github.com/havesome-t/<br>bricks-framework<br><br>
+    Versie 2.0
+  </div>
+</aside>
+
+<main class="main">
+
+  <!-- BANNER -->
+  <div class="banner">
+    <div class="banner-tag">Stijlgids — Visuele Documentatie</div>
+    <h1>Client-First<br>voor Bricks</h1>
+    <p>Hetzelfde naamgevingssysteem als Finsweet Client-First, gebouwd voor Bricks Builder en WordPress. Platform-onafhankelijk inzetbaar.</p>
+    <span class="banner-url">raw.githubusercontent.com/havesome-t/bricks-framework/main/framework.css</span>
+  </div>
 
 
-/* ============================================================
-   16. HELPER UTILITIES
-   ============================================================ */
+  <!-- NAAMGEVING SYSTEEM -->
+  <section class="sg-section" id="naamgeving">
+    <div class="sg-section-head">
+      <h2 class="sg-section-title">Naamgeving systeem</h2>
+      <span class="sg-section-tag">De basis van alles</span>
+    </div>
 
-.object-fit-cover    { object-fit: cover; }
-.object-fit-contain  { object-fit: contain; }
-.object-position-center { object-position: center; }
-.object-position-top    { object-position: top; }
+    <div class="card">
+      <div class="card-label">Drie soorten classes</div>
+      <div class="naming-row">
+        <div class="naming-type">Custom</div>
+        <div>
+          <div class="naming-example"><span class="pill">hero_content</span> &nbsp; <span class="pill">nav_logo</span> &nbsp; <span class="pill">card_title</span></div>
+          <div class="naming-desc">Gebruikt underscore (_) — specifiek voor één component of element. Altijd: component_element</div>
+        </div>
+      </div>
+      <div class="naming-row">
+        <div class="naming-type">Utility</div>
+        <div>
+          <div class="naming-example"><span class="pill">text-size-large</span> &nbsp; <span class="pill">padding-vertical-12</span> &nbsp; <span class="pill">display-flex</span></div>
+          <div class="naming-desc">Geen underscore — herbruikbaar op elke pagina, beschrijft één CSS eigenschap</div>
+        </div>
+      </div>
+      <div class="naming-row" style="border:none">
+        <div class="naming-type">Combo</div>
+        <div>
+          <div class="naming-example"><span class="pill">button-primary is-large</span> &nbsp; <span class="pill">button-primary is-white</span></div>
+          <div class="naming-desc">Prefix is- — werkt alleen in combinatie met een basis class, nooit alleen</div>
+        </div>
+      </div>
+    </div>
 
-.ratio-square    { aspect-ratio: 1 / 1; }
-.ratio-landscape { aspect-ratio: 4 / 3; }
-.ratio-video     { aspect-ratio: 16 / 9; }
-.ratio-portrait  { aspect-ratio: 3 / 4; }
+    <div class="card">
+      <div class="card-label">Underscore = folder = component relatie</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333">
+        <span class="pill">hero_component</span> &nbsp;→&nbsp; de hero is een component<br>
+        <span class="pill">hero_content</span> &nbsp;→&nbsp; content wrapper binnenin hero<br>
+        <span class="pill">hero_title</span> &nbsp;→&nbsp; titel element binnenin hero<br>
+        <span class="pill">hero_buttons</span> &nbsp;→&nbsp; knoppenrij binnenin hero<br><br>
+        Regel: lees van links naar rechts. Breed → specifiek.
+      </div>
+    </div>
+  </section>
 
-.text-truncate   { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.text-no-wrap    { white-space: nowrap; }
-.text-wrap-balance { text-wrap: balance; }
 
-.cursor-pointer  { cursor: pointer; }
-.user-select-none { user-select: none; }
+  <!-- CORE STRUCTURE -->
+  <section class="sg-section" id="structure">
+    <div class="sg-section-head">
+      <h2 class="sg-section-title">Core Structure</h2>
+      <span class="sg-section-tag">Vaste lagenstructuur — elke pagina, elke site</span>
+    </div>
 
-.transition-fast { transition: all var(--ease-fast); }
-.transition-base { transition: all var(--ease-base); }
-.transition-slow { transition: all var(--ease-slow); }
+    <div class="card">
+      <div class="card-label">De 6 lagen — altijd in deze volgorde bouwen</div>
+      <div class="structure">
+        <div class="layer is-core">
+          <span class="layer-name">page-wrapper</span>
+          <span class="layer-desc">Omsluit de volledige pagina</span>
+        </div>
+        <div class="layer is-primary layer-indent-1">
+          <span class="layer-name">main-wrapper</span>
+          <span class="layer-desc">Main content — exclusief nav en footer</span>
+        </div>
+        <div class="layer is-secondary layer-indent-2">
+          <span class="layer-name">section-[naam]</span>
+          <span class="layer-desc">Organiseert pagina in blokken — geef beschrijvende naam</span>
+        </div>
+        <div class="layer layer-indent-3">
+          <span class="layer-name">padding-global</span>
+          <span class="layer-desc">Alleen padding-left + padding-right — nooit verticaal</span>
+        </div>
+        <div class="layer layer-indent-4">
+          <span class="layer-name">container-large / medium / small</span>
+          <span class="layer-desc">Centreert content met max-width</span>
+        </div>
+        <div class="layer layer-indent-5" style="border-style:dashed;background:#fafafa">
+          <span class="layer-name" style="color:#aaa">jouw content</span>
+          <span class="layer-desc">Hero, kaarten, tekst, etc.</span>
+        </div>
+      </div>
+    </div>
 
-.shadow-small  { box-shadow: var(--shadow-small); }
-.shadow-medium { box-shadow: var(--shadow-medium); }
-.shadow-large  { box-shadow: var(--shadow-large); }
-.shadow-none   { box-shadow: none; }
+    <div class="card">
+      <div class="card-label">HTML voorbeeld — section-hero</div>
+      <div class="comp-tree">
+<span class="tag">&lt;div</span> <span class="class">class="page-wrapper"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;header&gt;</span><span class="comment">...nav...</span><span class="tag">&lt;/header&gt;</span>
+  <span class="tag">&lt;main</span> <span class="class">class="main-wrapper"</span><span class="tag">&gt;</span>
 
-.divider {
-  width: 100%;
-  height: 1px;
-  background-color: var(--color-border);
-}
+    <span class="tag">&lt;section</span> <span class="class">class="section-hero"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;div</span> <span class="class">class="padding-global padding-section-large"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;div</span> <span class="class">class="container-large"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;div</span> <span class="class">class="hero_content"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;p</span> <span class="class">class="hero_eyebrow"</span><span class="tag">&gt;</span>Label<span class="tag">&lt;/p&gt;</span>
+            <span class="tag">&lt;h1</span> <span class="class">class="hero_title"</span><span class="tag">&gt;</span>Heading<span class="tag">&lt;/h1&gt;</span>
+            <span class="tag">&lt;p</span> <span class="class">class="hero_text"</span><span class="tag">&gt;</span>Tekst<span class="tag">&lt;/p&gt;</span>
+            <span class="tag">&lt;div</span> <span class="class">class="hero_buttons"</span><span class="tag">&gt;</span>
+              <span class="tag">&lt;a</span> <span class="class">class="button-primary"</span><span class="tag">&gt;</span>CTA<span class="tag">&lt;/a&gt;</span>
+            <span class="tag">&lt;/div&gt;</span>
+          <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+      <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/section&gt;</span>
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-1) var(--space-3);
-  font-size: var(--text-xs);
-  font-weight: var(--weight-medium);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  border-radius: var(--radius-full);
-  background-color: var(--color-neutral-light);
-  color: var(--color-text);
-}
+  <span class="tag">&lt;/main&gt;</span>
+  <span class="tag">&lt;footer&gt;</span><span class="comment">...footer...</span><span class="tag">&lt;/footer&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+      </div>
+    </div>
 
-/* ============================================================
-   EINDE â€” HAVESOME-T CLIENT-FIRST FRAMEWORK v2.0
-   github.com/havesome-t/bricks-framework
-   ============================================================ */
+    <div class="card">
+      <div class="card-label">Container breedtes</div>
+      <div style="display:flex;flex-direction:column;gap:0.6rem">
+        <div style="display:flex;align-items:center;gap:1rem">
+          <span class="pill" style="width:160px;justify-content:center">container-xsmall</span>
+          <div style="background:#0d0d0d;height:20px;width:48px;border-radius:3px"></div>
+          <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted)">480px</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem">
+          <span class="pill" style="width:160px;justify-content:center">container-small</span>
+          <div style="background:#0d0d0d;height:20px;width:80px;border-radius:3px"></div>
+          <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted)">640px</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem">
+          <span class="pill" style="width:160px;justify-content:center">container-medium</span>
+          <div style="background:#0d0d0d;height:20px;width:160px;border-radius:3px"></div>
+          <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted)">860px</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem">
+          <span class="pill" style="width:160px;justify-content:center">container-large</span>
+          <div style="background:#0d0d0d;height:20px;width:280px;border-radius:3px"></div>
+          <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted)">1200px — standaard</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem">
+          <span class="pill" style="width:160px;justify-content:center">container-xlarge</span>
+          <div style="background:#0d0d0d;height:20px;width:360px;border-radius:3px"></div>
+          <span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted)">1400px</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- KLEUREN -->
+  <section class="sg-section" id="kleuren">
+    <div class="sg-section-head">
+      <h2 class="sg-section-title">Kleuren</h2>
+      <span class="sg-section-tag">Overschrijf per project via :root</span>
+    </div>
+    <div class="card">
+      <div class="card-label">Design tokens — pas aan in Bricks Theme Styles</div>
+      <div class="color-grid">
+        <div class="swatch"><div class="swatch-preview" style="background:#000"></div><div class="swatch-info"><span class="swatch-name">--color-primary</span><span class="swatch-val">#000000</span></div></div>
+        <div class="swatch"><div class="swatch-preview" style="background:#fff;border-bottom:1px solid #e5e5e5"></div><div class="swatch-info"><span class="swatch-name">--color-secondary</span><span class="swatch-val">#ffffff</span></div></div>
+        <div class="swatch"><div class="swatch-preview" style="background:#1a1a1a"></div><div class="swatch-info"><span class="swatch-name">--color-text</span><span class="swatch-val">#1a1a1a</span></div></div>
+        <div class="swatch"><div class="swatch-preview" style="background:#6b6b6b"></div><div class="swatch-info"><span class="swatch-name">--color-text-light</span><span class="swatch-val">#6b6b6b</span></div></div>
+        <div class="swatch"><div class="swatch-preview" style="background:#f5f5f5;border-bottom:1px solid #e5e5e5"></div><div class="swatch-info"><span class="swatch-name">--color-bg-alt</span><span class="swatch-val">#f5f5f5</span></div></div>
+        <div class="swatch"><div class="swatch-preview" style="background:#e0e0e0"></div><div class="swatch-info"><span class="swatch-name">--color-border</span><span class="swatch-val">#e0e0e0</span></div></div>
+        <div class="swatch"><div class="swatch-preview" style="background:#22c55e"></div><div class="swatch-info"><span class="swatch-name">--color-success</span><span class="swatch-val">#22c55e</span></div></div>
+        <div class="swatch"><div class="swatch-preview" style="background:#ef4444"></div><div class="swatch-info"><span class="swatch-name">--color-error</span><span class="swatch-val">#ef4444</span></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Utility classes</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <span style="background:#000;color:#fff;padding:6px 12px;border-radius:4px;font-family:var(--font-mono);font-size:0.68rem">.background-color-primary</span>
+        <span style="background:#f5f5f5;border:1px solid #e5e5e5;padding:6px 12px;border-radius:4px;font-family:var(--font-mono);font-size:0.68rem">.background-color-light</span>
+        <span style="background:#fff;border:1px solid #e5e5e5;padding:6px 12px;border-radius:4px;font-family:var(--font-mono);font-size:0.68rem">.background-color-white</span>
+        <span style="background:#1a1a1a;color:#fff;padding:6px 12px;border-radius:4px;font-family:var(--font-mono);font-size:0.68rem">.background-color-dark</span>
+        <span style="color:#000;font-family:var(--font-mono);font-size:0.68rem;padding:6px 0">.text-color-primary</span>
+        <span style="color:#6b6b6b;font-family:var(--font-mono);font-size:0.68rem;padding:6px 0">.text-color-light</span>
+        <span style="background:#1a1a1a;color:#fff;font-family:var(--font-mono);font-size:0.68rem;padding:6px 10px;border-radius:4px">.text-color-inverse</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- TYPOGRAPHY -->
+  <section class="sg-section" id="typography">
+    <div class="sg-section-head">
+      <h2 class="sg-section-title">Typography</h2>
+      <span class="sg-section-tag">rem scale — geen clamp</span>
+    </div>
+    <div class="card">
+      <div class="card-label">Type scale</div>
+      <div class="type-row">
+        <div class="type-meta"><span class="pill">.text-size-6xlarge</span><br><span style="font-family:var(--font-mono);font-size:0.58rem;color:var(--muted)">4.5rem / 72px</span></div>
+        <div class="type-sample" style="font-size:3rem;font-weight:700;line-height:1.1;letter-spacing:-0.03em">Heading</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="pill">.text-size-5xlarge</span><br><span style="font-family:var(--font-mono);font-size:0.58rem;color:var(--muted)">3.75rem / 60px</span></div>
+        <div class="type-sample" style="font-size:2.5rem;font-weight:700;line-height:1.1;letter-spacing:-0.03em">Heading</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="pill">.text-size-4xlarge</span><br><span style="font-family:var(--font-mono);font-size:0.58rem;color:var(--muted)">3rem / 48px</span></div>
+        <div class="type-sample" style="font-size:2rem;font-weight:700;line-height:1.2;letter-spacing:-0.03em">Heading</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="pill">.text-size-3xlarge</span><br><span style="font-family:var(--font-mono);font-size:0.58rem;color:var(--muted)">2.5rem / 40px</span></div>
+        <div class="type-sample" style="font-size:1.75rem;font-weight:700;line-height:1.2">Subheading</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="pill">.text-size-2xlarge</span><br><span style="font-family:var(--font-mono);font-size:0.58rem;color:var(--muted)">2rem / 32px</span></div>
+        <div class="type-sample" style="font-size:1.5rem;font-weight:600">Subheading</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="pill">.text-size-xlarge</span><br><span style="font-family:var(--font-mono);font-size:0.58rem;color:var(--muted)">1.5rem / 24px</span></div>
+        <div class="type-sample" style="font-size:1.3rem;font-weight:600">Lead tekst</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="pill">.text-size-large</span><br><span style="font-family:var(--font-mono);font-size:0.58rem;color:var(--muted)">1.25rem / 20px</span></div>
+        <div class="type-sample" style="font-size:1.15rem">Body groot</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="pill">.text-size-regular</span><br><span style="font-family:var(--font-mono);font-size:0.58rem;color:var(--muted)">1rem / 16px</span></div>
+        <div class="type-sample" style="font-size:1rem">Body standaard. Gebruik dit voor lopende tekst op elke pagina.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="pill">.text-size-small</span><br><span style="font-family:var(--font-mono);font-size:0.58rem;color:var(--muted)">0.875rem / 14px</span></div>
+        <div class="type-sample" style="font-size:0.875rem;color:#6b6b6b">Label, caption, meta</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><span class="pill">.text-size-xsmall</span><br><span style="font-family:var(--font-mono);font-size:0.58rem;color:var(--muted)">0.75rem / 12px</span></div>
+        <div class="type-sample" style="font-size:0.75rem;color:#888">Micro, timestamp, disclaimer</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SPACING -->
+  <section class="sg-section" id="spacing">
+    <div class="sg-section-head">
+      <h2 class="sg-section-title">Spacing</h2>
+      <span class="sg-section-tag">rem scale — 4px basis</span>
+    </div>
+    <div class="card">
+      <div class="card-label">Spacing tokens</div>
+      <div class="space-rows">
+        <div class="space-row"><span class="pill space-label">--space-2</span><div class="space-bar" style="width:8px"></div><span class="space-val">0.5rem / 8px</span></div>
+        <div class="space-row"><span class="pill space-label">--space-4</span><div class="space-bar" style="width:16px"></div><span class="space-val">1rem / 16px</span></div>
+        <div class="space-row"><span class="pill space-label">--space-6</span><div class="space-bar" style="width:24px"></div><span class="space-val">1.5rem / 24px</span></div>
+        <div class="space-row"><span class="pill space-label">--space-8</span><div class="space-bar" style="width:32px"></div><span class="space-val">2rem / 32px</span></div>
+        <div class="space-row"><span class="pill space-label">--space-12</span><div class="space-bar" style="width:48px"></div><span class="space-val">3rem / 48px</span></div>
+        <div class="space-row"><span class="pill space-label">--space-16</span><div class="space-bar" style="width:64px"></div><span class="space-val">4rem / 64px</span></div>
+        <div class="space-row"><span class="pill space-label">--space-20</span><div class="space-bar" style="width:80px"></div><span class="space-val">5rem / 80px</span></div>
+        <div class="space-row"><span class="pill space-label">--space-24</span><div class="space-bar" style="width:96px"></div><span class="space-val">6rem / 96px</span></div>
+        <div class="space-row"><span class="pill space-label">--space-32</span><div class="space-bar" style="width:128px"></div><span class="space-val">8rem / 128px</span></div>
+        <div class="space-row"><span class="pill space-label">--space-40</span><div class="space-bar" style="width:160px"></div><span class="space-val">10rem / 160px</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Section spacing — verticale witruimte per sectie</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.4">
+        <span class="pill">.padding-section-small</span> &nbsp;padding top + bottom 3rem<br>
+        <span class="pill">.padding-section-medium</span> &nbsp;padding top + bottom 5rem &nbsp;<span style="color:var(--muted)">— standaard</span><br>
+        <span class="pill">.padding-section-large</span> &nbsp;padding top + bottom 8rem<br><br>
+        <span style="color:var(--muted)">Gebruik altijd op het padding-global element, nooit direct op section.</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BUTTONS -->
+  <section class="sg-section" id="buttons">
+    <div class="sg-section-head">
+      <h2 class="sg-section-title">Buttons</h2>
+      <span class="sg-section-tag">Basis + combo klassen</span>
+    </div>
+    <div class="card">
+      <div class="card-label">Basis varianten</div>
+      <div class="btn-demo">
+        <a href="#" class="btn-primary">button-primary</a>
+        <a href="#" class="btn-secondary">button-secondary</a>
+        <a href="#" class="btn-text">button-text</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Combo klassen — combineer met basis</div>
+      <div class="btn-demo">
+        <a href="#" class="btn-primary is-small">is-small</a>
+        <a href="#" class="btn-primary">standaard</a>
+        <a href="#" class="btn-primary is-large">is-large</a>
+      </div>
+      <div style="margin-top:1rem;display:flex">
+        <a href="#" class="btn-primary" style="width:100%;justify-content:center">is-full-width</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Gebruik op donkere achtergrond</div>
+      <div style="background:#0d0d0d;border-radius:8px;padding:1.5rem;display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="#" class="btn-primary" style="background:#fff;color:#000;border-color:#fff">is-white</a>
+        <a href="#" class="btn-secondary" style="color:#fff;border-color:#fff">button-secondary op donker</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FORMS -->
+  <section class="sg-section" id="forms">
+    <div class="sg-section-head">
+      <h2 class="sg-section-title">Forms</h2>
+      <span class="sg-section-tag">Form utility classes</span>
+    </div>
+    <div class="card">
+      <div class="card-label">Veld structuur — altijd form-field-wrapper als wrapper</div>
+      <div style="display:flex;flex-direction:column;gap:1rem;max-width:480px">
+        <div style="display:flex;flex-direction:column;gap:0.5rem">
+          <label style="font-size:0.875rem;font-weight:500" class="form-label">Naam <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--muted)">.form-label</span></label>
+          <input type="text" placeholder="Jouw naam" style="width:100%;padding:0.75rem 1rem;font-size:1rem;border:1px solid #e0e0e0;border-radius:8px;font-family:var(--font-sans)" class="form-input">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.5rem">
+          <label style="font-size:0.875rem;font-weight:500">Bericht</label>
+          <textarea rows="4" placeholder="Jouw bericht" style="width:100%;padding:0.75rem 1rem;font-size:1rem;border:1px solid #e0e0e0;border-radius:8px;font-family:var(--font-sans);resize:vertical"></textarea>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:0.7rem;color:#22c55e">.form-success-message — Dit is een succes melding</div>
+        <div style="font-family:var(--font-mono);font-size:0.7rem;color:#ef4444">.form-error-message — Dit veld is verplicht</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- COMPONENTEN -->
+  <section class="sg-section" id="components">
+    <div class="sg-section-head">
+      <h2 class="sg-section-title">Component classes</h2>
+      <span class="sg-section-tag">Basisstructuur voor veelgebruikte componenten</span>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Hero component structuur</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333">
+        <span class="pill">.hero_component</span> &nbsp;→&nbsp; positie relative wrapper<br>
+        <span class="pill">.hero_content</span> &nbsp;→&nbsp; z-index 1, content laag<br>
+        <span class="pill">.hero_eyebrow</span> &nbsp;→&nbsp; klein label bovenaan<br>
+        <span class="pill">.hero_title</span> &nbsp;→&nbsp; grote heading<br>
+        <span class="pill">.hero_text</span> &nbsp;→&nbsp; subtekst<br>
+        <span class="pill">.hero_buttons</span> &nbsp;→&nbsp; flex container voor knoppen<br>
+        <span class="pill">.hero_background</span> &nbsp;→&nbsp; absolute fill voor achtergrond afbeelding
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Section header structuur — standaard sectie intro</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333">
+        <span class="pill">.section-header</span> &nbsp;→&nbsp; flex column container<br>
+        <span class="pill">.section-header_eyebrow</span> &nbsp;→&nbsp; uppercase label<br>
+        <span class="pill">.section-header_title</span> &nbsp;→&nbsp; sectie heading 4xl<br>
+        <span class="pill">.section-header_text</span> &nbsp;→&nbsp; subtekst groot
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Card component structuur</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.2;color:#333">
+        <span class="pill">.card</span> &nbsp;→&nbsp; basis wrapper met border en radius<br>
+        <span class="pill">.card_image</span> &nbsp;→&nbsp; afbeelding bovenaan<br>
+        <span class="pill">.card_content</span> &nbsp;→&nbsp; padding wrapper voor tekst<br>
+        <span class="pill">.card_label</span> &nbsp;→&nbsp; klein label<br>
+        <span class="pill">.card_title</span> &nbsp;→&nbsp; kaart titel<br>
+        <span class="pill">.card_text</span> &nbsp;→&nbsp; kaart tekst<br>
+        <span class="pill">.card_footer</span> &nbsp;→&nbsp; onderkant met border
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Andere beschikbare componenten</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.4;color:#333">
+        <strong>Nav:</strong> &nbsp;<span class="pill">.nav_wrapper</span> <span class="pill">.nav_logo</span> <span class="pill">.nav_menu</span> <span class="pill">.nav_link</span> <span class="pill">.nav_cta</span><br>
+        <strong>Footer:</strong> &nbsp;<span class="pill">.footer_component</span> <span class="pill">.footer_top</span> <span class="pill">.footer_bottom</span> <span class="pill">.footer_copyright</span><br>
+        <strong>Testimonial:</strong> &nbsp;<span class="pill">.testimonial_component</span> <span class="pill">.testimonial_quote</span> <span class="pill">.testimonial_author</span><br>
+        <strong>FAQ:</strong> &nbsp;<span class="pill">.faq_component</span> <span class="pill">.faq_item</span> <span class="pill">.faq_trigger</span> <span class="pill">.faq_answer</span><br>
+        <strong>Rich text:</strong> &nbsp;<span class="pill">.rich-text</span> &nbsp;voor WordPress content blokken
+      </div>
+    </div>
+  </section>
+
+
+  <!-- RESPONSIVE -->
+  <section class="sg-section" id="responsive">
+    <div class="sg-section-head">
+      <h2 class="sg-section-title">Responsive</h2>
+      <span class="sg-section-tag">Bricks standaard breakpoints</span>
+    </div>
+    <div class="card">
+      <div class="card-label">Breakpoints</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.4">
+        <span class="pill">max-width: 1200px</span> &nbsp;Tablet landscape<br>
+        <span class="pill">max-width: 992px</span> &nbsp;Tablet portrait<br>
+        <span class="pill">max-width: 768px</span> &nbsp;Mobiel landscape<br>
+        <span class="pill">max-width: 480px</span> &nbsp;Mobiel portrait
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Mobiel helper classes — werken alleen op max 768px</div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;line-height:2.4">
+        <span class="pill">.hide-mobile</span> &nbsp;verbergt element op mobiel<br>
+        <span class="pill">.show-mobile</span> &nbsp;toont element alleen op mobiel<br>
+        <span class="pill">.full-width-mobile</span> &nbsp;volle breedte op mobiel<br>
+        <span class="pill">.text-center-mobile</span> &nbsp;centreert tekst op mobiel<br>
+        <span class="pill">.flex-column-mobile</span> &nbsp;flex column op mobiel<br>
+        <span class="pill">.hide-desktop</span> &nbsp;verbergt element op desktop
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ALLE UTILITIES -->
+  <section class="sg-section" id="utilities">
+    <div class="sg-section-head">
+      <h2 class="sg-section-title">Alle utility classes</h2>
+      <span class="sg-section-tag">Snelle referentie</span>
+    </div>
+    <div class="card">
+      <div class="card-label">Layout</div>
+      <div style="font-family:var(--font-mono);font-size:0.7rem;line-height:2.2;color:#333">
+        <span class="pill">.display-flex</span> <span class="pill">.display-grid</span> <span class="pill">.display-block</span> <span class="pill">.display-none</span><br>
+        <span class="pill">.flex-direction-row</span> <span class="pill">.flex-direction-column</span> <span class="pill">.flex-wrap</span><br>
+        <span class="pill">.align-center</span> <span class="pill">.align-start</span> <span class="pill">.align-end</span> <span class="pill">.align-stretch</span><br>
+        <span class="pill">.justify-between</span> <span class="pill">.justify-center</span> <span class="pill">.justify-start</span> <span class="pill">.justify-end</span><br>
+        <span class="pill">.grid-cols-2</span> <span class="pill">.grid-cols-3</span> <span class="pill">.grid-cols-4</span> <span class="pill">.grid-cols-5</span> <span class="pill">.grid-cols-6</span><br>
+        <span class="pill">.span-2</span> <span class="pill">.span-3</span> <span class="pill">.span-4</span> <span class="pill">.span-full</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Sizing & Positie</div>
+      <div style="font-family:var(--font-mono);font-size:0.7rem;line-height:2.2;color:#333">
+        <span class="pill">.width-full</span> <span class="pill">.height-screen</span> <span class="pill">.min-height-screen</span><br>
+        <span class="pill">.position-relative</span> <span class="pill">.position-absolute</span> <span class="pill">.position-sticky</span><br>
+        <span class="pill">.absolute-fill</span> <span class="pill">.overflow-hidden</span> <span class="pill">.z-index-10</span> <span class="pill">.z-index-50</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Afbeeldingen & Ratio</div>
+      <div style="font-family:var(--font-mono);font-size:0.7rem;line-height:2.2;color:#333">
+        <span class="pill">.object-fit-cover</span> <span class="pill">.object-fit-contain</span> <span class="pill">.object-position-center</span><br>
+        <span class="pill">.ratio-square</span> <span class="pill">.ratio-landscape</span> <span class="pill">.ratio-video</span> <span class="pill">.ratio-portrait</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Overige</div>
+      <div style="font-family:var(--font-mono);font-size:0.7rem;line-height:2.2;color:#333">
+        <span class="pill">.shadow-small</span> <span class="pill">.shadow-medium</span> <span class="pill">.shadow-large</span><br>
+        <span class="pill">.transition-fast</span> <span class="pill">.transition-base</span> <span class="pill">.transition-slow</span><br>
+        <span class="pill">.text-truncate</span> <span class="pill">.text-no-wrap</span> <span class="pill">.visually-hidden</span><br>
+        <span class="pill">.cursor-pointer</span> <span class="pill">.divider</span> <span class="pill">.badge</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>
